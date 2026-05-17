@@ -1,0 +1,2050 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>ScottyHub — Digital Income Hub</title>
+<meta name="google-client-id" content="957638154415-fl9hoppidghklefn491rrdr9kb8e1cfs.apps.googleusercontent.com"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Exo+2:wght@300;400;500;600;700;800;900&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:#060b14;color:#e8f4ff;font-family:'Exo 2',sans-serif;overflow-x:hidden;min-height:100vh}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-thumb{background:linear-gradient(#00ffcc,#0077ff);border-radius:10px}
+::-webkit-scrollbar-track{background:#0a0f1a}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes shimmer{0%{background-position:-400% center}100%{background-position:400% center}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes glow{0%,100%{box-shadow:0 0 10px rgba(0,255,204,.3)}50%{box-shadow:0 0 30px rgba(0,255,204,.7),0 0 60px rgba(0,119,255,.3)}}
+@keyframes floatUp{0%{transform:translateY(0)}50%{transform:translateY(-6px)}100%{transform:translateY(0)}}
+@keyframes neonFlicker{0%,19%,21%,23%,25%,54%,56%,100%{opacity:1}20%,24%,55%{opacity:.4}}
+@keyframes countUp{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:scale(1)}}
+@keyframes progressFill{from{width:0}to{width:var(--target)}}
+@keyframes slideIn{from{transform:translateX(-20px);opacity:0}to{transform:translateX(0);opacity:1}}
+@keyframes progressBar{from{width:0%}to{width:100%}}
+
+/* UTILITY CLASSES */
+.shimmer-text{background:linear-gradient(90deg,#00ffcc,#0077ff,#00ffcc,#ff6b35);background-size:400% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer 4s linear infinite}
+.neon-text{color:#00ffcc;text-shadow:0 0 10px rgba(0,255,204,.8),0 0 20px rgba(0,255,204,.4)}
+.glass{background:rgba(6,11,20,.85);backdrop-filter:blur(20px);border:1px solid rgba(0,255,204,.12)}
+.card{background:rgba(10,16,28,.9);border:1px solid rgba(0,255,204,.1);border-radius:12px;transition:all .3s}
+.card:hover{border-color:rgba(0,255,204,.35);transform:translateY(-3px);box-shadow:0 8px 30px rgba(0,255,204,.08)}
+.btn{font-family:'Rajdhani',sans-serif;cursor:pointer;border:none;font-weight:700;transition:all .25s;letter-spacing:1px;text-transform:uppercase;font-size:13px;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.btn-cyan{background:linear-gradient(135deg,#00ffcc,#0077ff);color:#060b14}
+.btn-cyan:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(0,255,204,.4)}
+.btn-outline{background:transparent;color:#00ffcc;border:1px solid rgba(0,255,204,.4)}
+.btn-outline:hover{background:rgba(0,255,204,.08);border-color:#00ffcc;box-shadow:0 0 16px rgba(0,255,204,.2)}
+.btn-red{background:linear-gradient(135deg,#ff4444,#cc1111);color:#fff}
+.btn-red:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(255,68,68,.35)}
+.btn-ghost{background:rgba(255,255,255,.04);color:#e8f4ff;border:1px solid rgba(255,255,255,.08)}
+.btn-ghost:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.15)}
+.input{background:rgba(0,255,204,.03);border:1px solid rgba(0,255,204,.15);color:#e8f4ff;font-family:'Exo 2',sans-serif;font-size:14px;outline:none;transition:all .3s;width:100%;padding:11px 14px;border-radius:8px}
+.input:focus{border-color:#00ffcc;box-shadow:0 0 16px rgba(0,255,204,.15),inset 0 0 8px rgba(0,255,204,.05)}
+.input::placeholder{color:#334455;font-family:'Share Tech Mono',monospace;font-size:12px}
+.badge{display:inline-flex;align-items:center;gap:5px;background:rgba(0,255,204,.07);border:1px solid rgba(0,255,204,.25);color:#00ffcc;font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:4px 12px;border-radius:4px;font-family:'Share Tech Mono',monospace}
+.tag-hot{background:rgba(255,100,0,.1);border-color:rgba(255,100,0,.3);color:#ff8844}
+.tag-new{background:rgba(0,119,255,.1);border-color:rgba(0,119,255,.3);color:#4499ff}
+.tag-free{background:rgba(0,200,100,.1);border-color:rgba(0,200,100,.3);color:#00cc88}
+.tag-pro{background:rgba(150,0,255,.1);border-color:rgba(150,0,255,.3);color:#aa44ff}
+.sidebar-link{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:8px;cursor:pointer;color:#6688aa;font-size:13px;font-weight:600;transition:all .2s;border:none;background:none;width:100%;text-align:left;font-family:'Rajdhani',sans-serif;letter-spacing:.5px;text-transform:uppercase}
+.sidebar-link:hover{color:#e8f4ff;background:rgba(0,255,204,.06)}
+.sidebar-link.active{color:#00ffcc;background:linear-gradient(135deg,rgba(0,255,204,.1),rgba(0,119,255,.06));border-left:2px solid #00ffcc;padding-left:12px}
+.orb{position:fixed;border-radius:50%;pointer-events:none;filter:blur(100px);z-index:0}
+.section-title{font-family:'Rajdhani',sans-serif;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#00ffcc;font-size:11px;margin-bottom:8px}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.8);backdrop-filter:blur(8px);z-index:999;display:flex;align-items:center;justify-content:center;padding:20px;animation:fadeIn .2s ease}
+.hex-bg{background-image:url("data:image/svg+xml,%3Csvg width='60' height='70' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolygon points='30,5 55,20 55,50 30,65 5,50 5,20' fill='none' stroke='rgba(0,255,204,0.04)' stroke-width='1'/%3E%3C/svg%3E");background-size:60px 70px}
+.spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(6,11,20,.3);border-top-color:#060b14;border-radius:50%;animation:spin .7s linear infinite}
+.fade-up{animation:fadeUp .5s ease}
+
+/* LAYOUT */
+#topnav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(6,11,20,.95);backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,255,204,.08);height:58px;display:flex;align-items:center;padding:0 16px;gap:12px}
+#sidebar{position:fixed;top:0;left:0;bottom:0;width:250px;background:#070d17;border-right:1px solid rgba(0,255,204,.08);z-index:150;display:flex;flex-direction:column;transform:translateX(-100%);transition:transform .3s cubic-bezier(.4,0,.2,1);overflow-y:auto}
+#sidebar.open{transform:translateX(0)}
+#sidebar-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:148;opacity:0;pointer-events:none;transition:opacity .3s}
+#sidebar-overlay.open{opacity:1;pointer-events:auto}
+#main{padding-top:58px;min-height:100vh;position:relative;z-index:1}
+#page-content{padding:22px 18px;max-width:1060px;margin:0 auto}
+footer{border-top:1px solid rgba(0,255,204,.05);padding:20px 24px;text-align:center;margin-top:40px}
+</style>
+</head>
+<body>
+
+<!-- SPLASH -->
+<div id="splash" style="position:fixed;inset:0;background:#060b14;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;overflow:hidden">
+  <div style="position:absolute;inset:0" class="hex-bg"></div>
+  <div style="position:absolute;top:-10%;right:-10%;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(0,255,204,.08),transparent);filter:blur(80px)"></div>
+  <div style="position:absolute;bottom:5%;left:-10%;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(0,119,255,.06),transparent);filter:blur(80px)"></div>
+  <div id="splash-logo" style="margin-bottom:32px;animation:floatUp 3s ease-in-out infinite">
+    <svg width="72" height="72" viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="10" fill="#00ffcc" opacity=".9"/>
+      <circle cx="50" cy="25" r="9" fill="#00cc88"/><circle cx="70" cy="38" r="9" fill="#44aaff"/>
+      <circle cx="70" cy="62" r="9" fill="#9944ff"/><circle cx="50" cy="75" r="9" fill="#0044ff"/>
+      <circle cx="30" cy="62" r="9" fill="#ff6b35"/><circle cx="30" cy="38" r="9" fill="#ff4444"/>
+      <line x1="50" y1="50" x2="50" y2="25" stroke="rgba(0,255,204,.4)" stroke-width="1.5"/>
+      <line x1="50" y1="50" x2="70" y2="38" stroke="rgba(0,255,204,.4)" stroke-width="1.5"/>
+      <line x1="50" y1="50" x2="70" y2="62" stroke="rgba(0,255,204,.4)" stroke-width="1.5"/>
+      <line x1="50" y1="50" x2="50" y2="75" stroke="rgba(0,255,204,.4)" stroke-width="1.5"/>
+      <line x1="50" y1="50" x2="30" y2="62" stroke="rgba(0,255,204,.4)" stroke-width="1.5"/>
+      <line x1="50" y1="50" x2="30" y2="38" stroke="rgba(0,255,204,.4)" stroke-width="1.5"/>
+    </svg>
+  </div>
+  <div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:32px;letter-spacing:3px;margin-bottom:4px"><span style="color:#00ffcc">SCOTTY</span><span style="color:#e8f4ff">HUB</span></div>
+  <div style="color:#6688aa;font-size:11px;font-family:'Share Tech Mono',monospace;letter-spacing:3px;margin-bottom:40px">DIGITAL INCOME HUB</div>
+  <div style="width:240px;background:rgba(0,255,204,.06);border:1px solid rgba(0,255,204,.15);border-radius:4px;height:3px;overflow:hidden;margin-bottom:12px">
+    <div id="splash-bar" style="height:100%;background:linear-gradient(90deg,#00ffcc,#0077ff);width:0%;transition:width .1s linear"></div>
+  </div>
+  <div id="splash-txt" style="color:#6688aa;font-size:11px;font-family:'Share Tech Mono',monospace;letter-spacing:1px">Initializing systems...</div>
+</div>
+
+<!-- AUTH SCREEN -->
+<div id="auth-screen" style="display:none;min-height:100vh;background:#060b14;display:none;align-items:center;justify-content:center;padding:20px" class="hex-bg">
+  <div style="position:fixed;top:-10%;right:-10%;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(0,255,204,.06),transparent);filter:blur(80px);pointer-events:none"></div>
+  <div style="width:100%;max-width:420px">
+    <!-- Logo -->
+    <div style="text-align:center;margin-bottom:28px">
+      <svg width="52" height="52" viewBox="0 0 100 100" style="margin-bottom:10px">
+        <circle cx="50" cy="50" r="10" fill="#00ffcc" opacity=".9"/>
+        <circle cx="50" cy="25" r="9" fill="#00cc88"/><circle cx="70" cy="38" r="9" fill="#44aaff"/>
+        <circle cx="70" cy="62" r="9" fill="#9944ff"/><circle cx="50" cy="75" r="9" fill="#0044ff"/>
+        <circle cx="30" cy="62" r="9" fill="#ff6b35"/><circle cx="30" cy="38" r="9" fill="#ff4444"/>
+        <line x1="50" y1="50" x2="50" y2="25" stroke="rgba(0,255,204,.4)" stroke-width="1.5"/>
+        <line x1="50" y1="50" x2="70" y2="38" stroke="rgba(0,255,204,.4)" stroke-width="1.5"/>
+        <line x1="50" y1="50" x2="70" y2="62" stroke="rgba(0,255,204,.4)" stroke-width="1.5"/>
+        <line x1="50" y1="50" x2="50" y2="75" stroke="rgba(0,255,204,.4)" stroke-width="1.5"/>
+        <line x1="50" y1="50" x2="30" y2="62" stroke="rgba(0,255,204,.4)" stroke-width="1.5"/>
+        <line x1="50" y1="50" x2="30" y2="38" stroke="rgba(0,255,204,.4)" stroke-width="1.5"/>
+      </svg>
+      <div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:26px;letter-spacing:2px"><span style="color:#00ffcc">SCOTTY</span><span>HUB</span></div>
+      <div style="color:#6688aa;font-size:10px;font-family:'Share Tech Mono',monospace;letter-spacing:3px;margin-top:2px">DIGITAL INCOME HUB</div>
+    </div>
+    <!-- Auth card -->
+    <div class="card" style="padding:28px">
+      <!-- Tabs -->
+      <div style="display:flex;background:rgba(0,255,204,.04);border:1px solid rgba(0,255,204,.1);border-radius:8px;padding:3px;margin-bottom:24px">
+        <button id="tab-login" class="btn" onclick="authTab('login')" style="flex:1;padding:8px;border-radius:6px;font-size:12px;background:linear-gradient(135deg,#00ffcc,#0077ff);color:#060b14">Sign In</button>
+        <button id="tab-register" class="btn btn-ghost" onclick="authTab('register')" style="flex:1;padding:8px;border-radius:6px;font-size:12px;border:none">Register</button>
+      </div>
+      <div id="auth-error" style="display:none;background:rgba(255,68,68,.08);border:1px solid rgba(255,68,68,.2);border-radius:7px;padding:10px 14px;color:#ff8888;font-size:13px;margin-bottom:16px"></div>
+      <!-- Login form -->
+      <div id="form-login">
+        <input class="input" id="login-email" type="email" placeholder="Email address" style="margin-bottom:12px"/>
+        <input class="input" id="login-password" type="password" placeholder="Password" style="margin-bottom:18px"/>
+        <button class="btn btn-cyan" onclick="doLogin()" style="width:100%;padding:13px;border-radius:8px;font-size:14px;margin-bottom:14px" id="login-btn">Sign In to Dashboard</button>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+          <div style="flex:1;height:1px;background:rgba(255,255,255,.08)"></div>
+          <span style="color:#6688aa;font-size:11px;font-family:'Share Tech Mono',monospace;letter-spacing:1px">OR</span>
+          <div style="flex:1;height:1px;background:rgba(255,255,255,.08)"></div>
+        </div>
+        <button onclick="signInWithGoogle()" style="width:100%;padding:11px;border-radius:8px;font-size:13px;font-family:'Exo 2',sans-serif;font-weight:600;background:#fff;color:#1a1a2e;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:14px;transition:opacity .2s" onmouseover="this.style.opacity='.88'" onmouseout="this.style.opacity='1'">
+          <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/><path fill="none" d="M0 0h48v48H0z"/></svg>
+          Continue with Google
+        </button>
+        <div style="text-align:center;font-size:13px;color:#6688aa">
+          No account? <span style="color:#00ffcc;cursor:pointer;font-weight:700" onclick="authTab('register')">Register →</span>
+        </div>
+        <div style="text-align:center;margin-top:10px">
+          <span style="color:#6688aa;font-size:12px;cursor:pointer" onclick="showForgot()">Forgot password?</span>
+        </div>
+      </div>
+      <!-- Register form -->
+      <div id="form-register" style="display:none">
+        <input class="input" id="reg-name" type="text" placeholder="Username" style="margin-bottom:12px"/>
+        <input class="input" id="reg-email" type="email" placeholder="Email address" style="margin-bottom:12px"/>
+        <input class="input" id="reg-password" type="password" placeholder="Password (min 6 chars)" style="margin-bottom:12px"/>
+        <input class="input" id="reg-confirm" type="password" placeholder="Confirm password" style="margin-bottom:18px"/>
+        <button class="btn btn-cyan" onclick="doRegister()" style="width:100%;padding:13px;border-radius:8px;font-size:14px;margin-bottom:14px" id="reg-btn">Create Account</button>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+          <div style="flex:1;height:1px;background:rgba(255,255,255,.08)"></div>
+          <span style="color:#6688aa;font-size:11px;font-family:'Share Tech Mono',monospace;letter-spacing:1px">OR</span>
+          <div style="flex:1;height:1px;background:rgba(255,255,255,.08)"></div>
+        </div>
+        <button onclick="signInWithGoogle()" style="width:100%;padding:11px;border-radius:8px;font-size:13px;font-family:'Exo 2',sans-serif;font-weight:600;background:#fff;color:#1a1a2e;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:14px;transition:opacity .2s" onmouseover="this.style.opacity='.88'" onmouseout="this.style.opacity='1'">
+          <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/><path fill="none" d="M0 0h48v48H0z"/></svg>
+          Sign up with Google
+        </button>
+        <div style="text-align:center;font-size:13px;color:#6688aa">
+          Have an account? <span style="color:#00ffcc;cursor:pointer;font-weight:700" onclick="authTab('login')">Sign in →</span>
+        </div>
+      </div>
+      <!-- OTP verify form -->
+      <div id="form-otp" style="display:none;text-align:center">
+        <div style="font-size:40px;margin-bottom:12px">📧</div>
+        <div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:18px;margin-bottom:8px" id="otp-title">Verify Your Email</div>
+        <p style="color:#6688aa;font-size:13px;margin-bottom:20px" id="otp-sub">We sent a 6-digit code to your email. Enter it below.</p>
+        <input class="input" id="otp-code" type="text" placeholder="000000" maxlength="6" style="text-align:center;letter-spacing:8px;font-size:22px;font-family:'Share Tech Mono',monospace;margin-bottom:18px"/>
+        <button class="btn btn-cyan" onclick="doVerifyOTP()" style="width:100%;padding:13px;border-radius:8px;font-size:14px;margin-bottom:14px" id="otp-btn">Verify Code</button>
+        <div style="font-size:12px;color:#6688aa">Didn't get it? <span style="color:#00ffcc;cursor:pointer" onclick="doResendOTP()">Resend OTP</span></div>
+      </div>
+      <!-- Forgot password -->
+      <div id="form-forgot" style="display:none">
+        <div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:17px;margin-bottom:6px">Reset Password</div>
+        <p style="color:#6688aa;font-size:13px;margin-bottom:18px">Enter your email to receive a reset code.</p>
+        <input class="input" id="forgot-email" type="email" placeholder="Email address" style="margin-bottom:12px"/>
+        <button class="btn btn-cyan" onclick="doForgot()" style="width:100%;padding:13px;border-radius:8px;font-size:14px;margin-bottom:14px">Send Reset Code</button>
+        <div style="text-align:center"><span style="color:#00ffcc;font-size:13px;cursor:pointer" onclick="authTab('login')">← Back to Sign In</span></div>
+      </div>
+      <!-- Reset password -->
+      <div id="form-reset" style="display:none">
+        <div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:17px;margin-bottom:18px">Enter New Password</div>
+        <input class="input" id="reset-otp" type="text" placeholder="OTP Code" maxlength="6" style="margin-bottom:12px"/>
+        <input class="input" id="reset-pw" type="password" placeholder="New password" style="margin-bottom:12px"/>
+        <input class="input" id="reset-confirm" type="password" placeholder="Confirm new password" style="margin-bottom:18px"/>
+        <button class="btn btn-cyan" onclick="doReset()" style="width:100%;padding:13px;border-radius:8px;font-size:14px">Reset Password</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- APP SHELL -->
+<div id="app-shell" style="display:none;background:#060b14">
+  <!-- Background orbs -->
+  <div class="orb" style="width:600px;height:600px;background:radial-gradient(circle,rgba(0,255,204,.05),transparent);top:-10%;right:-10%"></div>
+  <div class="orb" style="width:500px;height:500px;background:radial-gradient(circle,rgba(0,119,255,.04),transparent);bottom:5%;left:-10%"></div>
+
+  <!-- TOP NAV -->
+  <nav id="topnav">
+    <button class="btn btn-ghost" id="menu-btn" onclick="toggleSidebar()" style="width:40px;height:40px;border-radius:8px;flex-direction:column;gap:5px;padding:0;flex-shrink:0">
+      <span class="hb" style="display:block;width:18px;height:2px;background:#e8f4ff;border-radius:2px"></span>
+      <span class="hb" style="display:block;width:18px;height:2px;background:#00ffcc;border-radius:2px"></span>
+      <span class="hb" style="display:block;width:18px;height:2px;background:#e8f4ff;border-radius:2px"></span>
+    </button>
+    <span id="nav-label" style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:15px;color:#00ffcc;letter-spacing:2px;text-transform:uppercase">Dashboard</span>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:8px">
+      <div style="position:relative;font-size:18px;cursor:pointer">🔔<span style="position:absolute;top:-2px;right:-2px;width:7px;height:7px;border-radius:50%;background:#00ffcc;border:2px solid #060b14;animation:pulse 2s infinite"></span></div>
+      <div style="display:flex;align-items:center;gap:7px;background:rgba(0,255,204,.06);border:1px solid rgba(0,255,204,.15);border-radius:8px;padding:5px 10px 5px 5px">
+        <div id="nav-avatar" style="width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#00ffcc,#0077ff);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:11px;color:#060b14">S</div>
+        <span id="nav-name" style="font-size:13px;font-weight:600">User</span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- SIDEBAR -->
+  <aside id="sidebar">
+    <div style="padding:16px 16px 12px;border-bottom:1px solid rgba(0,255,204,.06)">
+      <div style="display:flex;align-items:center;gap:10px">
+        <svg width="34" height="34" viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="10" fill="#00ffcc" opacity=".9"/>
+          <circle cx="50" cy="25" r="9" fill="#00cc88"/><circle cx="70" cy="38" r="9" fill="#44aaff"/>
+          <circle cx="70" cy="62" r="9" fill="#9944ff"/>
+          <line x1="50" y1="50" x2="50" y2="25" stroke="rgba(0,255,204,.4)" stroke-width="1.5"/>
+          <line x1="50" y1="50" x2="70" y2="38" stroke="rgba(0,255,204,.4)" stroke-width="1.5"/>
+          <line x1="50" y1="50" x2="70" y2="62" stroke="rgba(0,255,204,.4)" stroke-width="1.5"/>
+          <line x1="50" y1="50" x2="50" y2="75" stroke="rgba(0,255,204,.4)" stroke-width="1.5"/>
+          <line x1="50" y1="50" x2="30" y2="62" stroke="rgba(0,255,204,.4)" stroke-width="1.5"/>
+          <line x1="50" y1="50" x2="30" y2="38" stroke="rgba(0,255,204,.4)" stroke-width="1.5"/>
+        </svg>
+        <div>
+          <div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:16px;letter-spacing:1px"><span style="color:#00ffcc">SCOTTY</span>HUB</div>
+          <div style="color:#6688aa;font-size:9px;font-family:'Share Tech Mono',monospace;letter-spacing:2px">DIGITAL INCOME HUB</div>
+        </div>
+      </div>
+    </div>
+    <!-- User pill -->
+    <div style="padding:12px 14px;border-bottom:1px solid rgba(0,255,204,.05);display:flex;align-items:center;gap:10px">
+      <div id="sb-avatar" style="width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#00ffcc,#0077ff);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;color:#060b14;flex-shrink:0">S</div>
+      <div style="overflow:hidden;flex:1">
+        <div id="sb-name" style="font-weight:700;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">User</div>
+        <div style="color:#6688aa;font-size:10px;margin-top:1px;font-family:'Share Tech Mono',monospace">FREE PLAN</div>
+      </div>
+    </div>
+    <nav style="padding:8px;flex:1">
+      <div style="color:#1a2a3a;font-size:9px;font-weight:700;letter-spacing:2px;padding:10px 8px 4px;text-transform:uppercase;font-family:'Share Tech Mono',monospace">Navigation</div>
+      <div id="nav-items"></div>
+    </nav>
+    <!-- Upgrade card -->
+    <div style="margin:0 10px 12px;background:linear-gradient(135deg,rgba(0,255,204,.08),rgba(0,119,255,.06));border:1px solid rgba(0,255,204,.15);border-radius:10px;padding:14px">
+      <div style="font-weight:700;font-size:12px;margin-bottom:4px;font-family:'Rajdhani',sans-serif;letter-spacing:1px">⚡ UPGRADE TO PRO</div>
+      <p style="color:#6688aa;font-size:11px;margin-bottom:10px;line-height:1.6">Unlock all features from just $0.65/mo</p>
+      <button class="btn btn-cyan" onclick="navigate('payment')" style="width:100%;padding:8px;border-radius:7px;font-size:11px">Upgrade Now</button>
+    </div>
+    <button class="btn" onclick="doLogout()" style="margin:0 10px 16px;padding:10px;border-radius:8px;background:rgba(255,68,68,.08);color:#ff8888;border:1px solid rgba(255,68,68,.2);font-family:'Rajdhani',sans-serif;letter-spacing:1px;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;width:calc(100% - 20px)">🚪 LOGOUT</button>
+  </aside>
+  <div id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+  <!-- MAIN CONTENT -->
+  <main id="main">
+    <div id="page-content"></div>
+    <footer>
+      <div style="display:flex;justify-content:center;flex-wrap:wrap;gap:8px 20px;margin-bottom:10px">
+        <span style="color:#6688aa;font-size:12px;cursor:pointer;font-family:'Share Tech Mono',monospace" onclick="navigate('support')">Privacy Policy</span>
+        <span style="color:#6688aa;font-size:12px;cursor:pointer;font-family:'Share Tech Mono',monospace" onclick="navigate('legal')">Terms of Service</span>
+        <span style="color:#6688aa;font-size:12px;cursor:pointer;font-family:'Share Tech Mono',monospace" onclick="navigate('support')">Contact Us</span>
+      </div>
+      <p id="footer-copy" style="color:#1a2a3a;font-size:11px;font-family:'Share Tech Mono',monospace;cursor:default;user-select:none">
+        © 2025 ScottyHub • Built by Scotty • maposacourage41@gmail.com
+      </p>
+    </footer>
+  </main>
+</div>
+
+<!-- MODAL CONTAINER -->
+<div id="modal-root"></div>
+
+<script>
+// ════════════════════════════════════════════
+//  CONSTANTS
+// ════════════════════════════════════════════
+const API = '/api';
+const RAPID_KEY = '53375c26aemsh8bbd4d3b6338c66p15a84ejsna06fbbb10ec2';
+const RAPID_HOST = 'moviesdatabase.p.rapidapi.com';
+const RAPID_API = 'https://moviesdatabase.p.rapidapi.com';
+const RAPID_HEADERS = { 'x-rapidapi-key': RAPID_KEY, 'x-rapidapi-host': RAPID_HOST };
+const ITUNES_API = 'https://itunes.apple.com/search';
+const SPORTSDB_API = 'https://www.thesportsdb.com/api/v1/json/3';
+const EXCHANGE_API = 'https://open.er-api.com/v6/latest/USD';
+const CRYPTO_API = 'https://api.coingecko.com/api/v3';
+const BOT_PAIRING_URL = 'https://scotty-c.onrender.com';
+const YOUTUBE_CHANNEL = 'https://youtube.com/@scottyx-tech?si=w_ywEbFzNOfDb6Yv';
+const SUPPORT = { phone: '+263719080917', email: 'maposacourage41@gmail.com', telegram: 't.me/Scottycrg' };
+const PAYMENT = { ecocash: '+263788114185', binance: '1109003191', minipay: '+263788114185' };
+
+const NAV = [
+  { id:'dashboard', icon:'⬡', label:'Dashboard' },
+  { id:'bots', icon:'🤖', label:'Bot Rental', badge:'HOT' },
+  { id:'movies', icon:'🎬', label:'Movies' },
+  { id:'music', icon:'🎵', label:'Music' },
+  { id:'sports', icon:'⚽', label:'Sports' },
+  { id:'downloader', icon:'⬇', label:'Downloader' },
+  { id:'ai', icon:'🧠', label:'AI Chat', badge:'NEW' },
+  { id:'tools', icon:'🔧', label:'Tools' },
+  { id:'crypto', icon:'💹', label:'Crypto & Forex' },
+  { id:'referral', icon:'🤝', label:'Referrals', badge:'NEW' },
+  { id:'community', icon:'💬', label:'Community' },
+  { id:'leaderboard', icon:'🏆', label:'Leaderboard' },
+  { id:'store', icon:'🛒', label:'Store' },
+  { id:'news', icon:'📰', label:'News' },
+  { id:'payment', icon:'💳', label:'Payments' },
+  { id:'tutorials', icon:'🎓', label:'Tutorials' },
+  { id:'activity', icon:'📋', label:'My Activity' },
+  { id:'profile', icon:'👤', label:'Profile' },
+  { id:'support', icon:'💬', label:'Support' },
+  { id:'marketing', icon:'📢', label:'Marketing', badge:'NEW' },
+  { id:'setup', icon:'🛠', label:'Bot Setup' },
+  { id:'legal', icon:'📄', label:'Legal' },
+];
+
+// ════════════════════════════════════════════
+//  STATE
+// ════════════════════════════════════════════
+const S = {
+  user: null,
+  page: 'dashboard',
+  footerClicks: 0,
+  footerTimer: null,
+  // per-page ephemeral state
+  movies: { trending:[], results:[], tab:'trending', query:'', loading:false, selected:null },
+  music: { top:[], results:[], tab:'top', query:'', loading:false, selected:null },
+  sports: { data:[], tab:'livescores', loading:false },
+  posts: [], postsPage:1, postsLoading:false,
+  crypto: { coins:[], forex:null, tab:'crypto', loading:false },
+  aiMessages: [],
+  aiLoading: false,
+  botStatus: [],
+  pairPhone:'', pairCode:'', pairStep:0, pairing:false,
+  authMode: 'login', // login | register | otp | forgot | reset
+  pendingEmail: '',
+  tools: { tab:'qr', qrVal:'', qrResult:'', shortInput:'', shortResult:'' },
+};
+
+function token(){ return localStorage.getItem('sh_token') || ''; }
+function authH(){ return { 'Content-Type':'application/json', Authorization:`Bearer ${token()}` }; }
+
+// ════════════════════════════════════════════
+//  AUTH MODULE
+// ════════════════════════════════════════════
+async function apiPost(path, body){
+  const r = await fetch(API + path, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body) });
+  const d = await r.json();
+  if (!r.ok) throw new Error(d.message || 'Request failed');
+  return d;
+}
+
+// ── Google OAuth ─────────────────────────────
+function initGoogle(){
+  if (!window.google) return;
+  google.accounts.id.initialize({
+    client_id: window.GOOGLE_CLIENT_ID || '',
+    callback: handleGoogleCredential,
+    auto_select: false,
+    cancel_on_tap_outside: true
+  });
+}
+
+function signInWithGoogle(){
+  if (!window.google) { showAuthErr('Google Sign-In failed to load. Please refresh.'); return; }
+  if (!window.GOOGLE_CLIENT_ID) { showAuthErr('Google Client ID not configured. Add GOOGLE_CLIENT_ID to your env.'); return; }
+  google.accounts.id.prompt((notification) => {
+    if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+      // Fallback to popup flow
+      google.accounts.id.renderButton(
+        document.createElement('div'),
+        { theme: 'outline', size: 'large' }
+      );
+    }
+  });
+}
+
+async function handleGoogleCredential(response){
+  try {
+    showAuthErr('');
+    hideAuthErr();
+    const d = await apiPost('/auth/google', { credential: response.credential });
+    localStorage.setItem('sh_token', d.token);
+    S.user = { uid:d.user.id, email:d.user.email, name:d.user.username, plan:'free', isAdmin:d.user.role==='admin', avatar:d.user.avatar||'' };
+    localStorage.setItem('sh_current', JSON.stringify(S.user));
+    showApp();
+  } catch(err){
+    showAuthErr(err.message);
+  }
+}
+
+async function doLogin(){
+  const email = _v('login-email'), pw = _v('login-password');
+  if (!email||!pw) return showAuthErr('Fill in all fields');
+  setBtnLoad('login-btn', true, 'Signing in...');
+  try {
+    const d = await apiPost('/auth/login', { email, password:pw });
+    localStorage.setItem('sh_token', d.token);
+    S.user = { uid:d.user.id, email:d.user.email, name:d.user.username, plan:'free', isAdmin:d.user.role==='admin', avatar:d.user.avatar||'' };
+    localStorage.setItem('sh_current', JSON.stringify(S.user));
+    showApp();
+  } catch(e){ showAuthErr(e.message); }
+  setBtnLoad('login-btn', false, 'Sign In to Dashboard');
+}
+
+async function validateEmailAddress(email) {
+  try {
+    const r = await fetch(`https://rapid-email-verifier.fly.dev/verify?email=${encodeURIComponent(email)}`);
+    if (!r.ok) return { ok: true }; // fail open
+    const d = await r.json();
+    if (d.disposable === true) return { ok: false, msg: 'Disposable email addresses are not allowed.' };
+    if (d.valid === false) return { ok: false, msg: 'That email address doesn\'t appear to be valid.' };
+    return { ok: true };
+  } catch { return { ok: true }; } // fail open on network error
+}
+
+async function doRegister(){
+  const name=_v('reg-name'), email=_v('reg-email'), pw=_v('reg-password'), conf=_v('reg-confirm');
+  if(!name||!email||!pw) return showAuthErr('Fill in all fields');
+  if(pw!==conf) return showAuthErr('Passwords do not match');
+  if(pw.length<6) return showAuthErr('Password must be at least 6 characters');
+  setBtnLoad('reg-btn', true, 'Checking email...');
+  const emailCheck = await validateEmailAddress(email);
+  if (!emailCheck.ok) { setBtnLoad('reg-btn', false, 'Create Account'); return showAuthErr(emailCheck.msg); }
+  setBtnLoad('reg-btn', true, 'Creating account...');
+  try {
+    const d = await apiPost('/auth/register', { username:name, email, password:pw });
+    localStorage.setItem('sh_pending_uid', d.userId);
+    S.pendingEmail = email;
+    showAuthForm('otp');
+    _el('otp-title').textContent = 'Verify Your Email';
+    _el('otp-sub').textContent = `We sent a 6-digit code to ${email}`;
+    S.authMode = 'otp-verify';
+  } catch(e){ showAuthErr(e.message); }
+  setBtnLoad('reg-btn', false, 'Create Account');
+}
+
+async function doVerifyOTP(){
+  const otp = _v('otp-code').trim();
+  if(otp.length<6) return showAuthErr('Enter the 6-digit code');
+  setBtnLoad('otp-btn', true, 'Verifying...');
+  try {
+    if(S.authMode==='otp-verify'){
+      const d = await apiPost('/auth/verify', { userId:localStorage.getItem('sh_pending_uid'), otp });
+      localStorage.setItem('sh_token', d.token);
+      S.user = { uid:d.user.id, email:d.user.email, name:d.user.username, plan:'free', isAdmin:d.user.role==='admin', avatar:d.user.avatar||'' };
+      localStorage.setItem('sh_current', JSON.stringify(S.user));
+      localStorage.removeItem('sh_pending_uid');
+      showApp();
+    } else if(S.authMode==='otp-reset'){
+      showAuthForm('reset');
+    }
+  } catch(e){ showAuthErr(e.message); }
+  setBtnLoad('otp-btn', false, 'Verify Code');
+}
+
+async function doResendOTP(){
+  if(!S.pendingEmail) return;
+  try {
+    const d = await apiPost('/auth/send-otp', { email:S.pendingEmail });
+    localStorage.setItem('sh_pending_uid', d.userId);
+    showAuthErr('New code sent! Check your email.', true);
+  } catch(e){ showAuthErr(e.message); }
+}
+
+function showForgot(){ showAuthForm('forgot'); }
+
+async function doForgot(){
+  const email = _v('forgot-email');
+  if(!email) return showAuthErr('Enter your email');
+  try {
+    const d = await apiPost('/auth/send-otp', { email });
+    localStorage.setItem('sh_pending_uid', d.userId);
+    S.pendingEmail = email;
+    S.authMode = 'otp-reset';
+    showAuthForm('otp');
+    _el('otp-title').textContent = 'Reset Password';
+    _el('otp-sub').textContent = `We sent a reset code to ${email}`;
+  } catch(e){ showAuthErr(e.message); }
+}
+
+async function doReset(){
+  const otp=_v('reset-otp'), pw=_v('reset-pw'), conf=_v('reset-confirm');
+  if(!otp||!pw) return showAuthErr('Fill in all fields');
+  if(pw!==conf) return showAuthErr('Passwords do not match');
+  try {
+    await apiPost('/auth/reset-password', { userId:localStorage.getItem('sh_pending_uid'), otp, newPassword:pw });
+    showAuthErr('Password reset! Please sign in.', true);
+    setTimeout(()=>authTab('login'), 1500);
+  } catch(e){ showAuthErr(e.message); }
+}
+
+async function doLogout(){
+  localStorage.removeItem('sh_current'); localStorage.removeItem('sh_token');
+  S.user = null; S.aiMessages = []; S.posts = [];
+  hide('app-shell'); show('auth-screen'); authTab('login');
+}
+
+// ════════════════════════════════════════════
+//  AUTH UI HELPERS
+// ════════════════════════════════════════════
+function authTab(t){
+  const tabs = { login:'Sign In', register:'Register' };
+  _el('tab-login').className = 'btn' + (t==='login' ? ' btn-cyan' : ' btn-ghost');
+  _el('tab-login').style.cssText = t==='login' ? 'flex:1;padding:8px;border-radius:6px;font-size:12px;background:linear-gradient(135deg,#00ffcc,#0077ff);color:#060b14;border:none' : 'flex:1;padding:8px;border-radius:6px;font-size:12px;background:rgba(255,255,255,.04);color:#e8f4ff;border:1px solid rgba(255,255,255,.08)';
+  _el('tab-register').className = 'btn' + (t==='register' ? ' btn-cyan' : ' btn-ghost');
+  _el('tab-register').style.cssText = t==='register' ? 'flex:1;padding:8px;border-radius:6px;font-size:12px;background:linear-gradient(135deg,#00ffcc,#0077ff);color:#060b14;border:none' : 'flex:1;padding:8px;border-radius:6px;font-size:12px;background:rgba(255,255,255,.04);color:#e8f4ff;border:1px solid rgba(255,255,255,.08)';
+  showAuthForm(t);
+  hideAuthErr();
+}
+function showAuthForm(f){
+  ['login','register','otp','forgot','reset'].forEach(x=>{ _el('form-'+x).style.display = x===f?'block':'none'; });
+}
+function showAuthErr(msg, success=false){
+  const el = _el('auth-error');
+  el.style.display='block';
+  el.style.background = success?'rgba(0,200,100,.08)':'rgba(255,68,68,.08)';
+  el.style.borderColor = success?'rgba(0,200,100,.2)':'rgba(255,68,68,.2)';
+  el.style.color = success?'#00cc88':'#ff8888';
+  el.textContent=msg;
+}
+function hideAuthErr(){ _el('auth-error').style.display='none'; }
+
+// ════════════════════════════════════════════
+//  APP INIT / NAVIGATION
+// ════════════════════════════════════════════
+function showApp(){
+  hide('auth-screen'); show('app-shell');
+  const u = S.user;
+  const init = u.name?.[0]?.toUpperCase()||'U';
+  _el('nav-avatar').textContent = init;
+  _el('nav-name').textContent = u.name?.split(' ')[0]||'User';
+  _el('sb-avatar').textContent = init;
+  _el('sb-name').textContent = u.name||'User';
+  buildSidebarNav();
+  navigate('dashboard');
+}
+
+function buildSidebarNav(){
+  const container = _el('nav-items');
+  container.innerHTML = NAV.map(n=>`
+    <button class="sidebar-link${S.page===n.id?' active':''}" id="nav-${n.id}" onclick="navigate('${n.id}')">
+      <span style="font-size:15px">${n.icon}</span>
+      <span style="flex:1">${n.label}</span>
+      ${n.badge?`<span style="font-size:8px;font-weight:700;padding:2px 6px;border-radius:3px;font-family:'Share Tech Mono',monospace;letter-spacing:1px;background:${n.badge==='HOT'?'rgba(255,100,0,.15)':'rgba(0,119,255,.15)'};color:${n.badge==='HOT'?'#ff8844':'#4499ff'};border:1px solid ${n.badge==='HOT'?'rgba(255,100,0,.3)':'rgba(0,119,255,.3)'}">${n.badge}</span>`:''}
+    </button>`).join('');
+}
+
+function navigate(page){
+  S.page = page;
+  closeSidebar();
+  // Update nav label
+  const navItem = NAV.find(n=>n.id===page);
+  _el('nav-label').textContent = navItem?.label||'Dashboard';
+  // Update active states
+  NAV.forEach(n=>{
+    const el = _el('nav-'+n.id);
+    if(el){ el.className = 'sidebar-link'+(n.id===page?' active':''); }
+  });
+  // Render page
+  _el('page-content').innerHTML = pages[page] ? pages[page]() : pages.dashboard();
+  // Post-render init
+  if(pageInits[page]) pageInits[page]();
+  window.scrollTo(0,0);
+}
+
+function toggleSidebar(){
+  _el('sidebar').classList.toggle('open');
+  _el('sidebar-overlay').classList.toggle('open');
+}
+function closeSidebar(){
+  _el('sidebar').classList.remove('open');
+  _el('sidebar-overlay').classList.remove('open');
+}
+
+// ════════════════════════════════════════════
+//  DOM HELPERS
+// ════════════════════════════════════════════
+function _el(id){ return document.getElementById(id); }
+function _v(id){ return (_el(id)||{}).value||''; }
+function show(id){ _el(id).style.display=''; }
+function hide(id){ _el(id).style.display='none'; }
+function setBtnLoad(id, loading, label){
+  const el=_el(id); if(!el)return;
+  el.disabled=loading;
+  el.innerHTML=loading?`<span class="spinner"></span> ${label}`:`${label}`;
+}
+
+// ════════════════════════════════════════════
+//  SHARED UI COMPONENTS
+// ════════════════════════════════════════════
+function cardGrid(items, renderFn, minW=200){
+  return `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(${minW}px,1fr));gap:14px">${items.map(renderFn).join('')}</div>`;
+}
+function statCard(icon,value,label,color){
+  return `<div class="card" style="padding:16px 14px">
+    <div style="font-size:22px;margin-bottom:8px">${icon}</div>
+    <div style="font-family:'Rajdhani',sans-serif;font-size:clamp(1.2rem,3vw,1.6rem);font-weight:900;color:${color};line-height:1">${value}</div>
+    <div style="color:#6688aa;font-size:11px;margin-top:4px;font-family:'Share Tech Mono',monospace">${label}</div>
+  </div>`;
+}
+function pageHeader(badge,title,sub,badgeClass=''){
+  return `<div class="badge${badgeClass?' '+badgeClass:''}" style="margin-bottom:12px">${badge}</div>
+    <h2 style="font-family:'Rajdhani',sans-serif;font-size:clamp(1.3rem,3vw,2rem);font-weight:700;margin-bottom:6px">${title}</h2>
+    <p style="color:#6688aa;font-size:14px;margin-bottom:22px">${sub}</p>`;
+}
+
+// ════════════════════════════════════════════
+//  PAGES
+// ════════════════════════════════════════════
+const pages = {
+
+// ── DASHBOARD HOME ──
+dashboard(){
+  return `<div class="fade-up">
+    <div style="background:linear-gradient(135deg,rgba(0,255,204,.06),rgba(0,119,255,.04));border:1px solid rgba(0,255,204,.12);border-radius:14px;padding:24px 22px;margin-bottom:22px;position:relative;overflow:hidden">
+      <div style="position:absolute;right:-30px;top:-30px;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,rgba(0,255,204,.1),transparent);filter:blur(20px)"></div>
+      <div class="badge" style="margin-bottom:10px">◈ Welcome</div>
+      <h2 style="font-family:'Rajdhani',sans-serif;font-size:clamp(1.2rem,4vw,1.8rem);font-weight:700;margin-bottom:6px">
+        Hey, <span class="shimmer-text">${S.user?.name||'User'}</span> 👋
+      </h2>
+      <p style="color:#6688aa;font-size:14px;max-width:420px">Your ScottyHub command center. Bots, media, marketing — all in one place.</p>
+      <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap">
+        <button class="btn btn-cyan" onclick="navigate('bots')" style="padding:9px 18px;border-radius:7px;font-size:13px">🤖 Get Bot Free</button>
+        <button class="btn btn-outline" onclick="navigate('movies')" style="padding:9px 18px;border-radius:7px;font-size:13px">🎬 Browse Movies</button>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-bottom:22px">
+      ${statCard('👥','<span id="stat-u">0</span>+','Users','#0077ff')}
+      ${statCard('🤖','<span id="stat-b">0</span>+','Bots Deployed','#00ffcc')}
+      ${statCard('📥','<span id="stat-d">0</span>+','Downloads','#ff6b35')}
+      ${statCard('💰','$<span id="stat-r">0</span>+','Revenue','#00cc88')}
+    </div>
+    <div class="section-title">◈ Quick Actions</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:22px">
+      ${[
+        {id:'bots',icon:'🤖',title:'Get a Bot',desc:'Deploy your WhatsApp bot today',color:'#00ffcc'},
+        {id:'ai',icon:'🧠',title:'AI Chat',desc:'Ask ScottyAI anything',color:'#9944ff'},
+        {id:'downloader',icon:'⬇',title:'Downloader',desc:'YouTube & TikTok downloads',color:'#ff4444'},
+        {id:'movies',icon:'🎬',title:'Watch Movies',desc:'Browse trending movies & series',color:'#0077ff'},
+        {id:'crypto',icon:'💹',title:'Crypto & Forex',desc:'Live prices & ZWL rates',color:'#00cc88'},
+        {id:'referral',icon:'🤝',title:'Earn Referrals',desc:'20% commission per referral',color:'#F0B90B'},
+        {id:'tools',icon:'🔧',title:'Free Tools',desc:'QR codes, URL shortener',color:'#ff6b35'},
+        {id:'community',icon:'💬',title:'Community',desc:'Chat with other users',color:'#00ffcc'},
+      ].map(q=>`
+        <div class="card" style="padding:18px 16px;cursor:pointer" onclick="navigate('${q.id}')">
+          <div style="font-size:28px;margin-bottom:10px">${q.icon}</div>
+          <div style="font-weight:700;font-size:14px;margin-bottom:4px">${q.title}</div>
+          <p style="color:#6688aa;font-size:12px;line-height:1.5">${q.desc}</p>
+          <div style="color:${q.color};font-size:12px;font-weight:700;margin-top:10px;font-family:'Rajdhani',sans-serif;letter-spacing:1px">ACCESS →</div>
+        </div>`).join('')}
+    </div>
+    <div class="section-title">◈ Recent Activity</div>
+    <div class="card" style="padding:4px 0">
+      ${[
+        {icon:'🤖',text:'Bot session activated successfully',time:'Just now',col:'#00ffcc'},
+        {icon:'🎬',text:'Movie streamed: Action Pack 2025',time:'2 hrs ago',col:'#0077ff'},
+        {icon:'💳',text:'Payment confirmed — EcoCash $0.65',time:'Yesterday',col:'#00cc88'},
+        {icon:'🎵',text:'Music downloaded: Afrobeats Mix',time:'2 days ago',col:'#ff6b35'},
+      ].map((a,i)=>`
+        <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;${i<3?'border-bottom:1px solid rgba(255,255,255,.03)':''}">
+          <div style="width:34px;height:34px;border-radius:8px;background:${a.col}22;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0">${a.icon}</div>
+          <div style="flex:1"><div style="font-size:13px;font-weight:600">${a.text}</div><div style="color:#6688aa;font-size:11px;margin-top:2px;font-family:'Share Tech Mono',monospace">${a.time}</div></div>
+          <div style="width:7px;height:7px;border-radius:50%;background:${a.col};box-shadow:0 0 8px ${a.col}"></div>
+        </div>`).join('')}
+    </div>
+  </div>`;
+},
+
+// ── BOTS PAGE ──
+bots(){
+  const plans = [
+    {name:'Free Bot',price:'FREE',icon:'🤖',col:'#00cc88',features:['Basic commands (50+)','1 WhatsApp session','Community support','Self-hosted on Render']},
+    {name:'Pro Bot',price:'$0.65/mo',icon:'⚡',col:'#0077ff',features:['Full ScottyMD commands','Multi-session support','Priority support','Auto-updates'],popular:true},
+    {name:'Custom Bot',price:'$2',icon:'🛠',col:'#ff6b35',features:['Built from your specs','Custom menu & branding','1 month support','Render + domain setup']},
+  ];
+  return `<div class="fade-up">
+    ${pageHeader('🤖 Bot Rental','WhatsApp Bot <span style="color:#00ffcc">Rental & Pairing</span>','Deploy your own WhatsApp bot in minutes. Free tier available.')}
+    <!-- Bot Plans -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-bottom:28px">
+      ${plans.map(p=>`
+        <div class="card" style="padding:22px;position:relative;${p.popular?'border-color:rgba(0,255,204,.4)':''}">
+          ${p.popular?`<div style="position:absolute;top:-10px;right:14px;background:linear-gradient(135deg,#00ffcc,#0077ff);color:#060b14;font-size:9px;font-weight:700;padding:3px 10px;border-radius:20px;font-family:'Rajdhani',sans-serif;letter-spacing:1px">MOST POPULAR</div>`:''}
+          <div style="font-size:36px;margin-bottom:12px">${p.icon}</div>
+          <div style="font-weight:700;font-size:16px;margin-bottom:6px">${p.name}</div>
+          <div style="font-family:'Rajdhani',sans-serif;font-size:28px;font-weight:900;color:${p.col};margin-bottom:14px">${p.price}</div>
+          <ul style="list-style:none;margin-bottom:20px">
+            ${p.features.map(f=>`<li style="color:#6688aa;font-size:13px;padding:4px 0;display:flex;align-items:center;gap:8px"><span style="color:#00ffcc">✓</span>${f}</li>`).join('')}
+          </ul>
+          <button class="btn btn-cyan" onclick="showPayModal('${p.name}','${p.price}','WhatsApp bot rental')" style="width:100%;padding:11px;border-radius:8px">Get Started</button>
+        </div>`).join('')}
+    </div>
+    <!-- Bot Status -->
+    <div class="section-title">◈ Bot Server Status</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:24px" id="bot-status-grid">
+      <div class="card" style="padding:16px">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="width:10px;height:10px;border-radius:50%;background:#ffa500;animation:pulse 2s infinite"></div>
+          <div><div style="font-weight:700;font-size:13px">Scotty-C</div><div style="color:#6688aa;font-size:11px;font-family:'Share Tech Mono',monospace">Checking...</div></div>
+        </div>
+      </div>
+      <div class="card" style="padding:16px">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="width:10px;height:10px;border-radius:50%;background:#ffa500;animation:pulse 2s infinite"></div>
+          <div><div style="font-weight:700;font-size:13px">ScottyAI</div><div style="color:#6688aa;font-size:11px;font-family:'Share Tech Mono',monospace">Checking...</div></div>
+        </div>
+      </div>
+    </div>
+    <!-- Pairing -->
+    <div class="section-title">◈ WhatsApp Pairing</div>
+    <div class="card" style="padding:22px;max-width:480px">
+      <div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:16px;margin-bottom:6px">🔗 Pair Your Number</div>
+      <p style="color:#6688aa;font-size:13px;margin-bottom:18px">Enter your WhatsApp number to get a pairing code. No QR scan needed.</p>
+      <div style="display:flex;gap:8px;margin-bottom:14px">
+        <input class="input" id="pair-phone" type="tel" placeholder="263788114185" value="${S.pairPhone}" oninput="S.pairPhone=this.value" style="flex:1"/>
+        <button class="btn btn-cyan" onclick="startPairing()" id="pair-btn" style="padding:11px 18px;border-radius:8px;white-space:nowrap">Get Code</button>
+      </div>
+      <div id="pair-result" style="${S.pairCode?'':'display:none'}">
+        <div style="font-size:11px;color:#6688aa;margin-bottom:6px;font-family:'Share Tech Mono',monospace">PAIRING CODE</div>
+        <div style="font-family:'Share Tech Mono',monospace;font-size:28px;font-weight:700;color:#00ffcc;letter-spacing:6px;background:rgba(0,255,204,.04);border:1px solid rgba(0,255,204,.2);border-radius:8px;padding:14px;text-align:center;margin-bottom:12px">${S.pairCode}</div>
+        <p style="color:#6688aa;font-size:12px">Go to WhatsApp → Linked Devices → Link a Device → Enter code above</p>
+      </div>
+    </div>
+  </div>`;
+},
+
+// ── MOVIES PAGE ──
+movies(){
+  return `<div class="fade-up">
+    ${pageHeader('🎬 Movies','Trending <span style="color:#0077ff">Movies & Series</span>','Browse top rated movies & search any title. Powered by IMDb data.')}
+    <div style="display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap">
+      <button class="btn ${S.movies.tab==='trending'?'btn-cyan':'btn-ghost'}" onclick="moviesTab('trending')" style="padding:8px 16px;border-radius:7px;font-size:12px">🔥 Trending</button>
+      ${S.movies.results.length?`<button class="btn ${S.movies.tab==='search'?'btn-cyan':'btn-ghost'}" onclick="moviesTab('search')" style="padding:8px 16px;border-radius:7px;font-size:12px">🔍 Results (${S.movies.results.length})</button>`:''}
+    </div>
+    <div style="display:flex;gap:8px;margin-bottom:20px">
+      <input class="input" id="movie-search" placeholder="Search movies or series..." value="${S.movies.query}" oninput="S.movies.query=this.value" onkeydown="if(event.key==='Enter')searchMovies()" style="flex:1"/>
+      <button class="btn btn-cyan" onclick="searchMovies()" style="padding:11px 18px;border-radius:8px">Search</button>
+    </div>
+    <div id="movies-grid">
+      ${S.movies.loading?'<div style="text-align:center;padding:40px;color:#6688aa">Loading...</div>':
+        (S.movies.tab==='trending'?S.movies.trending:S.movies.results).length?
+        `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:14px">
+          ${(S.movies.tab==='trending'?S.movies.trending:S.movies.results).map(m=>`
+            <div class="card" style="cursor:pointer;overflow:hidden" onclick="showMovieDetail(${m.id})">
+              ${m.primaryImage?.url?`<img src="${m.primaryImage.url}" alt="${m.titleText?.text||m.originalTitleText?.text||'Movie'}" style="width:100%;height:220px;object-fit:cover" loading="lazy"/>`
+                :`<div style="width:100%;height:220px;background:rgba(0,255,204,.04);display:flex;align-items:center;justify-content:center;font-size:40px">🎬</div>`}
+              <div style="padding:10px">
+                <div style="font-weight:700;font-size:12px;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${m.title||m.name}</div>
+                <div style="display:flex;align-items:center;gap:6px">
+                  <span style="color:#F0B90B;font-size:11px">★ ${(m.vote_average||0).toFixed(1)}</span>
+                  <span style="color:#6688aa;font-size:10px;font-family:'Share Tech Mono',monospace">${m.media_type?.toUpperCase()||'MOVIE'}</span>
+                </div>
+              </div>
+            </div>`).join('')}
+        </div>`
+        :`<div style="text-align:center;padding:48px"><div style="font-size:48px;margin-bottom:12px">🎬</div><p style="color:#6688aa">No content yet. Search for something!</p></div>`}
+    </div>
+  </div>`;
+},
+
+// ── MUSIC PAGE ──
+music(){
+  return `<div class="fade-up">
+    ${pageHeader('🎵 Music','Top Hits & <span style="color:#9944ff">Music Search</span>','Discover trending music. Powered by iTunes.')}
+    <div style="display:flex;gap:8px;margin-bottom:18px">
+      <input class="input" id="music-search" placeholder="Search songs or artists..." value="${S.music.query}" oninput="S.music.query=this.value" onkeydown="if(event.key==='Enter')searchMusic()" style="flex:1"/>
+      <button class="btn btn-cyan" onclick="searchMusic()" style="padding:11px 18px;border-radius:8px">Search</button>
+    </div>
+    <div id="music-grid">
+      ${S.music.loading?'<div style="text-align:center;padding:40px;color:#6688aa">Loading...</div>':
+        (S.music.tab==='search'&&S.music.results.length?S.music.results:S.music.top).length?
+        `<div style="display:flex;flex-direction:column;gap:8px">
+          ${(S.music.tab==='search'&&S.music.results.length?S.music.results:S.music.top).map((t,i)=>`
+            <div class="card" style="display:flex;align-items:center;gap:14px;padding:14px 16px">
+              <div style="font-size:16px;font-family:'Share Tech Mono',monospace;color:#6688aa;width:24px;text-align:center;flex-shrink:0">${i+1}</div>
+              <img src="${t.artworkUrl60||t.artworkUrl100}" alt="${t.trackName}" style="width:48px;height:48px;border-radius:8px;object-fit:cover;flex-shrink:0" onerror="this.style.display='none'" loading="lazy"/>
+              <div style="flex:1;min-width:0">
+                <div style="font-weight:700;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${t.trackName||'Unknown'}</div>
+                <div style="color:#6688aa;font-size:12px;margin-top:2px">${t.artistName||''}</div>
+              </div>
+              ${t.previewUrl?`<audio controls src="${t.previewUrl}" style="height:28px;width:110px;opacity:.7;flex-shrink:0"></audio>`:''}
+            </div>`).join('')}
+        </div>`
+        :`<div style="text-align:center;padding:48px"><div style="font-size:48px;margin-bottom:12px">🎵</div><p style="color:#6688aa">Loading top hits...</p></div>`}
+    </div>
+  </div>`;
+},
+
+// ── SPORTS PAGE ──
+sports(){
+  const sportTabs = [
+    {id:'livescores',label:'⚽ Soccer'},
+    {id:'basketball',label:'🏀 NBA'},
+    {id:'cricket',label:'🏏 Cricket'},
+    {id:'rugby',label:'🏉 Rugby'},
+  ];
+  return `<div class="fade-up">
+    ${pageHeader('⚽ Sports','Live Scores & <span style="color:#00cc88">Results</span>','Real-time sports scores from TheSportsDB.')}
+    <div style="display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap">
+      ${sportTabs.map(t=>`<button class="btn ${S.sports.tab===t.id?'btn-cyan':'btn-ghost'}" onclick="sportTab('${t.id}')" style="padding:8px 16px;border-radius:7px;font-size:12px">${t.label}</button>`).join('')}
+    </div>
+    <div id="sports-content">
+      ${S.sports.loading?'<div style="text-align:center;padding:40px;color:#6688aa">Loading scores...</div>':
+        S.sports.data.length?`<div style="display:flex;flex-direction:column;gap:10px">
+          ${S.sports.data.map(e=>`
+            <div class="card" style="padding:16px 18px">
+              <div style="font-size:10px;color:#6688aa;font-family:'Share Tech Mono',monospace;margin-bottom:8px">${e.strLeague||''}  •  ${e.dateEvent||''}</div>
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+                <div style="flex:1;font-weight:700;font-size:14px">${e.strHomeTeam}</div>
+                <div style="font-family:'Rajdhani',sans-serif;font-size:22px;font-weight:900;color:#00ffcc;text-align:center;white-space:nowrap">${e.intHomeScore??'-'} – ${e.intAwayScore??'-'}</div>
+                <div style="flex:1;font-weight:700;font-size:14px;text-align:right">${e.strAwayTeam}</div>
+              </div>
+              ${e.strStatus?`<div style="text-align:center;margin-top:8px"><span style="font-size:10px;padding:2px 8px;border-radius:3px;${e.strStatus==='Match Finished'?'background:rgba(0,200,100,.1);color:#00cc88':'background:rgba(255,165,0,.1);color:#ffa500'};font-family:'Share Tech Mono',monospace">${e.strStatus}</span></div>`:''}
+            </div>`).join('')}
+        </div>`
+        :`<div style="text-align:center;padding:48px"><div style="font-size:48px;margin-bottom:12px">⚽</div><p style="color:#6688aa">No events found. Try another sport.</p></div>`}
+    </div>
+  </div>`;
+},
+
+// ── DOWNLOADER PAGE ──
+downloader(){
+  const tabs = ['tiktok','youtube_video','youtube_audio'];
+  const labels = ['TikTok','YouTube Video','YouTube Audio'];
+  const tab = S.dlTab||'tiktok';
+  return `<div class="fade-up">
+    ${pageHeader('⬇ Downloader','Social Media <span style="color:#ff4444">Downloader</span>','Download TikTok & YouTube content. Free & fast.')}
+    <div style="display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap">
+      ${tabs.map((t,i)=>`<button class="btn ${tab===t?'btn-cyan':'btn-ghost'}" onclick="S.dlTab='${t}';navigate('downloader')" style="padding:8px 16px;border-radius:7px;font-size:12px">${labels[i]}</button>`).join('')}
+    </div>
+    <div class="card" style="padding:24px;max-width:560px;margin-bottom:16px">
+      <div style="font-size:48px;text-align:center;margin-bottom:14px">${tab==='tiktok'?'🎵':tab==='youtube_audio'?'🎵':'▶'}</div>
+      <div style="display:flex;gap:8px;margin-bottom:16px">
+        <input class="input" id="dl-url" placeholder="${tab==='tiktok'?'Paste TikTok link...':tab==='youtube_audio'?'Paste YouTube link for MP3...':'Paste YouTube link...'}" style="flex:1"/>
+        <button class="btn btn-cyan" onclick="doDownload()" id="dl-btn" style="padding:11px 18px;border-radius:8px">Download</button>
+      </div>
+      <div id="dl-result"></div>
+    </div>
+    <div class="card" style="padding:16px;background:rgba(255,165,0,.04);border-color:rgba(255,165,0,.2)">
+      <div style="font-size:13px;color:#ffa500;font-weight:700;margin-bottom:4px">⚠ About the Downloader</div>
+      <p style="color:#6688aa;font-size:12px;line-height:1.6">We use Cobalt — the best open-source downloader. If a link fails, the video may be private, geo-restricted, or the service may be temporarily down. Try again or use a different link.</p>
+    </div>
+  </div>`;
+},
+
+// ── AI CHAT PAGE ──
+ai(){
+  return `<div class="fade-up" style="max-width:680px">
+    <div class="badge tag-new" style="margin-bottom:12px">🧠 AI Chat</div>
+    <h2 style="font-family:'Rajdhani',sans-serif;font-size:clamp(1.3rem,3vw,2rem);font-weight:700;margin-bottom:6px">ScottyAI <span style="color:#9944ff">Assistant</span></h2>
+    <p style="color:#6688aa;font-size:14px;margin-bottom:18px">Ask anything about WhatsApp bots, Baileys.js, deployment, or ScottyHub.</p>
+    <div class="card" style="padding:0;overflow:hidden;display:flex;flex-direction:column;height:460px">
+      <div id="ai-messages" style="flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px">
+        ${S.aiMessages.length===0?`
+          <div style="text-align:center;padding:40px 20px;opacity:.7">
+            <div style="font-size:48px;margin-bottom:12px">🧠</div>
+            <div style="font-weight:700;font-size:15px;margin-bottom:6px">ScottyAI</div>
+            <p style="color:#6688aa;font-size:13px">Ask me anything about WhatsApp bots, Node.js, Render deployment, or making money online.</p>
+          </div>` :
+          S.aiMessages.map(m=>`
+            <div style="display:flex;${m.role==='user'?'justify-content:flex-end':'justify-content:flex-start'}">
+              <div style="max-width:80%;padding:11px 14px;border-radius:${m.role==='user'?'12px 12px 4px 12px':'12px 12px 12px 4px'};font-size:13px;line-height:1.6;${m.role==='user'?'background:linear-gradient(135deg,#00ffcc,#0077ff);color:#060b14;font-weight:600':'background:rgba(0,255,204,.06);border:1px solid rgba(0,255,204,.12);color:#e8f4ff'}">
+                ${m.content}
+              </div>
+            </div>`).join('')}
+        ${S.aiLoading?`<div style="display:flex;justify-content:flex-start"><div style="padding:11px 14px;border-radius:12px 12px 12px 4px;background:rgba(0,255,204,.06);border:1px solid rgba(0,255,204,.12);display:flex;align-items:center;gap:8px"><span style="color:#6688aa;font-size:13px">ScottyAI is thinking</span><span class="spinner" style="border-color:rgba(0,255,204,.2);border-top-color:#00ffcc"></span></div></div>`:''}
+      </div>
+      <div style="padding:12px;border-top:1px solid rgba(0,255,204,.08);display:flex;gap:8px">
+        <input class="input" id="ai-input" placeholder="Ask ScottyAI..." style="flex:1" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendAI();}"/>
+        <button class="btn btn-cyan" onclick="sendAI()" style="padding:11px 16px;border-radius:8px">Send</button>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
+      ${['How do I deploy a WhatsApp bot?','Help me make money online','What is ScottyHub Pro?','Write a bot command for me'].map(s=>`
+        <button class="btn btn-ghost" onclick="aiSuggestion('${s}')" style="padding:7px 14px;border-radius:20px;font-size:11px;font-family:'Exo 2',sans-serif;text-transform:none;letter-spacing:0">${s}</button>`).join('')}
+    </div>
+  </div>`;
+},
+
+// ── TOOLS PAGE ──
+tools(){
+  const tab = S.tools.tab;
+  return `<div class="fade-up">
+    ${pageHeader('🔧 Tools','Free <span style="color:#ff6b35">Utility Tools</span>','Handy tools for every day use.')}
+    <div style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap">
+      <button class="btn ${tab==='qr'?'btn-cyan':'btn-ghost'}" onclick="toolTab('qr')" style="padding:8px 16px;border-radius:7px;font-size:12px">📷 QR Generator</button>
+      <button class="btn ${tab==='short'?'btn-cyan':'btn-ghost'}" onclick="toolTab('short')" style="padding:8px 16px;border-radius:7px;font-size:12px">🔗 URL Shortener</button>
+    </div>
+    ${tab==='qr'?`
+      <div class="card" style="padding:24px;max-width:480px">
+        <div style="font-weight:700;font-size:16px;font-family:'Rajdhani',sans-serif;margin-bottom:14px">📷 QR Code Generator</div>
+        <input class="input" id="qr-input" placeholder="Enter URL or text..." value="${S.tools.qrVal}" oninput="S.tools.qrVal=this.value" style="margin-bottom:12px"/>
+        <button class="btn btn-cyan" onclick="generateQR()" style="padding:11px 24px;border-radius:8px;margin-bottom:16px">Generate QR Code</button>
+        <div id="qr-output" style="text-align:center">${S.tools.qrResult?`<img src="${S.tools.qrResult}" alt="QR Code" style="border-radius:10px;max-width:200px"/>`:''}</div>
+      </div>`:
+    `<div class="card" style="padding:24px;max-width:480px">
+        <div style="font-weight:700;font-size:16px;font-family:'Rajdhani',sans-serif;margin-bottom:14px">🔗 URL Shortener</div>
+        <input class="input" id="short-input" placeholder="Paste long URL..." value="${S.tools.shortInput}" oninput="S.tools.shortInput=this.value" style="margin-bottom:12px"/>
+        <button class="btn btn-cyan" onclick="shortenURL()" style="padding:11px 24px;border-radius:8px;margin-bottom:16px">Shorten URL</button>
+        <div id="short-output">${S.tools.shortResult?`
+          <div style="background:rgba(0,255,204,.04);border:1px solid rgba(0,255,204,.2);border-radius:8px;padding:12px 14px;display:flex;align-items:center;gap:10px">
+            <a href="${S.tools.shortResult}" target="_blank" style="color:#00ffcc;font-family:'Share Tech Mono',monospace;font-size:13px;flex:1">${S.tools.shortResult}</a>
+            <button class="btn btn-outline" onclick="navigator.clipboard.writeText('${S.tools.shortResult}');this.textContent='✓ Copied!';setTimeout(()=>this.textContent='Copy',2000)" style="padding:6px 12px;border-radius:6px;font-size:11px">Copy</button>
+          </div>`:''}</div>
+      </div>`}
+  </div>`;
+},
+
+// ── CRYPTO PAGE ──
+crypto(){
+  return `<div class="fade-up">
+    ${pageHeader('💹 Crypto & Forex','Live <span style="color:#F0B90B">Markets</span>','Real-time crypto prices & exchange rates.')}
+    <div style="display:flex;gap:8px;margin-bottom:18px">
+      <button class="btn ${S.crypto.tab==='crypto'?'btn-cyan':'btn-ghost'}" onclick="cryptoTab('crypto')" style="padding:8px 16px;border-radius:7px;font-size:12px">💰 Crypto</button>
+      <button class="btn ${S.crypto.tab==='forex'?'btn-cyan':'btn-ghost'}" onclick="cryptoTab('forex')" style="padding:8px 16px;border-radius:7px;font-size:12px">💱 Forex</button>
+    </div>
+    <div id="crypto-content">
+      ${S.crypto.loading?'<div style="text-align:center;padding:40px;color:#6688aa">Loading prices...</div>':
+        S.crypto.tab==='crypto'?
+        (S.crypto.coins.length?`<div style="display:flex;flex-direction:column;gap:8px">
+          ${S.crypto.coins.map(c=>{
+            const up=c.price_change_percentage_24h>=0;
+            return `<div class="card" style="display:flex;align-items:center;gap:14px;padding:14px 16px">
+              <img src="${c.image}" alt="${c.name}" style="width:36px;height:36px;border-radius:50%" loading="lazy"/>
+              <div style="flex:1">
+                <div style="font-weight:700;font-size:14px">${c.name}</div>
+                <div style="color:#6688aa;font-size:11px;font-family:'Share Tech Mono',monospace">${c.symbol?.toUpperCase()}</div>
+              </div>
+              <div style="text-align:right">
+                <div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:16px">$${c.current_price?.toLocaleString()}</div>
+                <div style="font-size:12px;color:${up?'#00cc88':'#ff4444'};font-family:'Share Tech Mono',monospace">${up?'▲':'▼'} ${Math.abs(c.price_change_percentage_24h||0).toFixed(2)}%</div>
+              </div>
+            </div>`;}).join('')}
+        </div>`:'<div style="text-align:center;padding:40px;color:#6688aa">Loading crypto data...</div>')
+        :(S.crypto.forex?`<div>
+          <div class="card" style="padding:14px;margin-bottom:14px">
+            <div style="font-size:11px;color:#6688aa;font-family:'Share Tech Mono',monospace;margin-bottom:8px">1 USD equals:</div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px">
+              ${Object.entries(S.crypto.forex).filter(([k])=>['ZAR','BWP','ZWL','EUR','GBP','KES','NGN','GHS','BTC','ETH'].includes(k)).map(([k,v])=>`
+                <div style="background:rgba(0,255,204,.04);border:1px solid rgba(0,255,204,.08);border-radius:8px;padding:12px">
+                  <div style="font-family:'Share Tech Mono',monospace;font-size:10px;color:#6688aa;margin-bottom:4px">${k}</div>
+                  <div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:18px;color:#00ffcc">${typeof v==='number'?v.toLocaleString(undefined,{maximumFractionDigits:4}):v}</div>
+                </div>`).join('')}
+            </div>
+          </div>
+        </div>`:'<div style="text-align:center;padding:40px;color:#6688aa">Loading forex data...</div>')}
+    </div>
+  </div>`;
+},
+
+// ── REFERRAL PAGE ──
+referral(){
+  const code = 'SH-' + (S.user?.uid||'USER').slice(-6).toUpperCase();
+  const link = `https://scottyhub.onrender.com?ref=${code}`;
+  const stats = JSON.parse(localStorage.getItem(`sh_ref_${S.user?.uid}`) || '{"clicks":0,"signups":0,"earnings":0}');
+  return `<div class="fade-up">
+    ${pageHeader('🤝 Referrals','Earn With <span style="color:#00ffcc">Referrals</span>','Share your link. Earn 20% commission on every paid referral. Paid weekly via EcoCash or Binance.','tag-new')}
+    <div class="card" style="padding:22px;margin-bottom:20px;border:1px solid rgba(0,255,204,.2)">
+      <div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:15px;color:#00ffcc;margin-bottom:14px">🔗 Your Referral Link</div>
+      <div style="background:rgba(0,255,204,.04);border:1px solid rgba(0,255,204,.12);border-radius:8px;padding:12px 14px;margin-bottom:12px;font-family:'Share Tech Mono',monospace;font-size:12px;color:#00ffcc;word-break:break-all">${link}</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn btn-cyan" id="copy-ref-btn" onclick="copyRef('${link}')" style="padding:10px 20px;border-radius:7px;font-size:13px">📋 Copy Link</button>
+        <a href="https://wa.me/?text=Join%20ScottyHub%20-%20WhatsApp%20Bots%2C%20Movies%2C%20Music%20%26%20more!%20Sign%20up%20free%3A%20${encodeURIComponent(link)}" target="_blank" style="text-decoration:none">
+          <button class="btn btn-outline" style="padding:10px 20px;border-radius:7px;font-size:13px">💬 WhatsApp Share</button>
+        </a>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-bottom:20px">
+      ${statCard('👆',stats.clicks,'Total Clicks','#0077ff')}
+      ${statCard('👥',stats.signups,'Signups','#00ffcc')}
+      ${statCard('💰','$'+stats.earnings.toFixed(2),'Earnings','#00cc88')}
+      ${statCard('📊','20%','Commission','#ff6b35')}
+    </div>
+    <div class="card" style="padding:22px">
+      <div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:15px;color:#00ffcc;margin-bottom:16px">📋 How It Works</div>
+      ${[
+        {n:'01',t:'Share Your Link',d:'Send your referral link to friends, family, or your audience on social media.'},
+        {n:'02',t:'They Sign Up',d:'When someone registers using your link, they\'re tracked to your account for 30 days.'},
+        {n:'03',t:'They Subscribe',d:'When they pay for any ScottyHub plan, you earn 20% of their first payment.'},
+        {n:'04',t:`You Get Paid`,d:`Minimum payout is $1. Request via WhatsApp ${SUPPORT.phone} every Monday.`},
+      ].map((s,i)=>`
+        <div style="display:flex;gap:14px;${i<3?'margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,.04)':''}">
+          <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,rgba(0,255,204,.15),rgba(0,119,255,.1));border:1px solid rgba(0,255,204,.2);display:flex;align-items:center;justify-content:center;font-family:'Share Tech Mono',monospace;font-size:11px;color:#00ffcc;flex-shrink:0">${s.n}</div>
+          <div><div style="font-weight:700;font-size:14px;margin-bottom:4px">${s.t}</div><p style="color:#6688aa;font-size:13px;line-height:1.6">${s.d}</p></div>
+        </div>`).join('')}
+    </div>
+  </div>`;
+},
+
+// ── COMMUNITY / FEED ──
+community(){
+  return `<div class="fade-up">
+    ${pageHeader('💬 Community','ScottyHub <span style="color:#00ffcc">Feed</span>','Share ideas, get help, and connect with the community.')}
+    <!-- Post composer -->
+    <div class="card" style="padding:16px;margin-bottom:18px">
+      <textarea id="post-input" class="input" placeholder="What's on your mind? Share with the community..." style="resize:vertical;min-height:80px;margin-bottom:12px"></textarea>
+      <div style="display:flex;justify-content:flex-end">
+        <button class="btn btn-cyan" onclick="createPost()" id="post-btn" style="padding:10px 24px;border-radius:8px">Post</button>
+      </div>
+    </div>
+    <div id="posts-list">
+      ${S.postsLoading?'<div style="text-align:center;padding:40px;color:#6688aa"><span class="spinner" style="border-color:rgba(0,255,204,.2);border-top-color:#00ffcc;width:24px;height:24px"></span></div>':
+        S.posts.length?S.posts.map(p=>renderPost(p)).join('')
+        :`<div style="text-align:center;padding:48px;color:#6688aa"><div style="font-size:48px;margin-bottom:12px">💬</div><p>No posts yet. Be the first to post!</p></div>`}
+    </div>
+    ${S.posts.length?`<div style="text-align:center;margin-top:16px"><button class="btn btn-ghost" onclick="loadMorePosts()" style="padding:10px 24px;border-radius:8px;font-size:13px">Load More</button></div>`:''}
+  </div>`;
+},
+
+// ── LEADERBOARD ──
+leaderboard(){
+  const lb = [
+    {rank:1,name:'Scotty',pts:2400,icon:'👑'},
+    {rank:2,name:'DevZim',pts:1880,icon:'🥈'},
+    {rank:3,name:'BotKing',pts:1540,icon:'🥉'},
+    {rank:4,name:'TechGirl',pts:1200,icon:'⭐'},
+    {rank:5,name:'WaBot',pts:980,icon:'⭐'},
+    {rank:6,name:'CodeLord',pts:870,icon:'⭐'},
+    {rank:7,name:'Zim2025',pts:760,icon:'⭐'},
+    {rank:8,name:'MobiDev',pts:650,icon:'⭐'},
+  ];
+  return `<div class="fade-up">
+    ${pageHeader('🏆 Leaderboard','Top <span style="color:#F0B90B">ScottyHub</span> Users','Earn points by using features, referring users & being active.')}
+    <div style="display:flex;flex-direction:column;gap:8px">
+      ${lb.map(u=>`
+        <div class="card" style="display:flex;align-items:center;gap:14px;padding:14px 16px;${u.rank<=3?'border-color:rgba(240,185,11,.3);background:rgba(240,185,11,.03)':''}">
+          <div style="font-size:22px;width:28px;text-align:center;flex-shrink:0">${u.icon}</div>
+          <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#00ffcc,#0077ff);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;color:#060b14;flex-shrink:0">${u.name[0]}</div>
+          <div style="flex:1">
+            <div style="font-weight:700;font-size:14px">${u.name}</div>
+            <div style="color:#6688aa;font-size:11px;font-family:'Share Tech Mono',monospace">Rank #${u.rank}</div>
+          </div>
+          <div style="font-family:'Rajdhani',sans-serif;font-weight:900;font-size:20px;color:${u.rank<=3?'#F0B90B':'#6688aa'}">${u.pts.toLocaleString()} pts</div>
+        </div>`).join('')}
+    </div>
+    <div class="card" style="padding:18px;margin-top:16px;background:rgba(0,255,204,.03)">
+      <div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:14px;margin-bottom:8px">🎯 How to Earn Points</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px">
+        ${[['Login daily','50 pts'],['Refer a user','200 pts'],['Make a post','20 pts'],['Buy a bot plan','500 pts']].map(([a,p])=>`
+          <div style="display:flex;justify-content:space-between;font-size:12px;padding:8px 12px;background:rgba(255,255,255,.03);border-radius:6px">
+            <span style="color:#e8f4ff">${a}</span><span style="color:#00ffcc;font-family:'Share Tech Mono',monospace;font-weight:700">${p}</span>
+          </div>`).join('')}
+      </div>
+    </div>
+  </div>`;
+},
+
+// ── STORE PAGE ──
+store(){
+  const products = [
+    {name:'ScottyMD Bot Source',price:'$0.65',icon:'🤖',desc:'Full Baileys bot with 50+ commands',sales:142,col:'#00ffcc'},
+    {name:'Cypher Bot Pack',price:'$1',icon:'⚡',desc:'Advanced multi-session bot framework',sales:89,col:'#0077ff'},
+    {name:'WA UI Templates',price:'$0.65',icon:'🎨',desc:'15 premium menu & response templates',sales:203,col:'#ff6b35'},
+    {name:'Marketing Bot Config',price:'$1',icon:'📢',desc:'Bulk sender + auto-reply bundle',sales:67,col:'#00ffcc'},
+    {name:'Pairing Page Kit',price:'$0.65',icon:'🖥',desc:'Dark themed pairing page HTML/CSS/JS',sales:54,col:'#00cc88'},
+    {name:'Bot Deploy Guide PDF',price:'$0.65',icon:'📄',desc:'Render & Heroku step-by-step deploy guide',sales:178,col:'#0077ff'},
+    {name:'Full Bot Bundle',price:'$2',icon:'📦',desc:'All source codes + setup guide + 1mo support',sales:34,col:'#ff6b35',popular:true},
+  ];
+  return `<div class="fade-up">
+    ${pageHeader('🛒 Digital Store','Shop <span style="color:#0077ff">Premium Products</span>','Instant delivery. Lifetime access. Built by real devs.')}
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px">
+      ${products.map(p=>`
+        <div class="card" style="padding:20px;position:relative;${p.popular?'border:1px solid rgba(0,255,204,.4)':''}">
+          ${p.popular?`<div style="position:absolute;top:-10px;right:14px;background:linear-gradient(135deg,#00ffcc,#0077ff);color:#060b14;font-size:9px;font-weight:700;padding:3px 10px;border-radius:20px;font-family:'Rajdhani',sans-serif;letter-spacing:1px">BEST VALUE</div>`:''}
+          <div style="font-size:34px;margin-bottom:12px">${p.icon}</div>
+          <div style="font-weight:700;font-size:14px;margin-bottom:4px">${p.name}</div>
+          <p style="color:#6688aa;font-size:12px;margin-bottom:12px;line-height:1.5">${p.desc}</p>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+            <span style="font-family:'Rajdhani',sans-serif;font-size:24px;font-weight:900;color:${p.col}">${p.price}</span>
+            <span style="color:#6688aa;font-size:11px;font-family:'Share Tech Mono',monospace">🔥 ${p.sales} sold</span>
+          </div>
+          <button class="btn btn-cyan" onclick="showPayModal('${p.name}','${p.price}','${p.desc}')" style="width:100%;padding:10px;border-radius:7px">Buy Now</button>
+        </div>`).join('')}
+    </div>
+  </div>`;
+},
+
+// ── NEWS PAGE ──
+news(){
+  const sample = [
+    {t:'ScottyHub v2.0 Released',d:'Major update with new bot features, improved UI, and faster performance.',date:'Today',icon:'🚀',col:'#00ffcc'},
+    {t:'New Baileys.js Update Available',d:'WhatsApp Web JS library updated. Improved connection stability and multi-device support.',date:'2 days ago',icon:'🤖',col:'#0077ff'},
+    {t:'Render Free Tier Update',d:'Render changes free tier spin-down behavior. Here\'s what you need to know for bot hosting.',date:'3 days ago',icon:'⚡',col:'#ff6b35'},
+    {t:'Zimbabwe Tech Meetup 2025',d:'ScottyHub will be featured at the upcoming Zimbabwe developers conference.',date:'1 week ago',icon:'🇿🇼',col:'#00cc88'},
+    {t:'New Tutorial: Deploy Bot in 5 Minutes',d:'Watch our latest YouTube tutorial on deploying a WhatsApp bot from scratch in under 5 minutes.',date:'2 weeks ago',icon:'🎓',col:'#9944ff'},
+  ];
+  return `<div class="fade-up">
+    ${pageHeader('📰 News','Latest <span style="color:#0077ff">Updates</span>','Stay up to date with ScottyHub and the tech world.')}
+    <div style="display:flex;flex-direction:column;gap:12px">
+      ${sample.map(n=>`
+        <div class="card" style="padding:18px 20px;display:flex;gap:16px;align-items:flex-start">
+          <div style="width:44px;height:44px;border-radius:10px;background:${n.col}15;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">${n.icon}</div>
+          <div style="flex:1">
+            <div style="font-weight:700;font-size:14px;margin-bottom:5px">${n.t}</div>
+            <p style="color:#6688aa;font-size:13px;line-height:1.6;margin-bottom:8px">${n.d}</p>
+            <div style="font-size:11px;font-family:'Share Tech Mono',monospace;color:${n.col}">${n.date}</div>
+          </div>
+        </div>`).join('')}
+    </div>
+  </div>`;
+},
+
+// ── PAYMENT PAGE ──
+payment(){
+  const methods = [
+    {id:'ecocash',icon:'💚',name:'EcoCash',num:PAYMENT.ecocash,desc:'Send to number directly',steps:['Open EcoCash','Tap Send Money',`Number: ${PAYMENT.ecocash}`,'Confirm']},
+    {id:'binance',icon:'🟡',name:'Binance Pay',num:PAYMENT.binance,desc:'Pay ID payment',steps:['Open Binance','Tap Pay','Enter Pay ID: '+PAYMENT.binance,'Confirm amount']},
+    {id:'minipay',icon:'💜',name:'MiniPay',num:PAYMENT.minipay,desc:'Celo-based mobile wallet',steps:['Open MiniPay','Tap Send Money',`Number: ${PAYMENT.minipay}`,'Confirm']},
+  ];
+  const plans = [
+    {name:'Basic Plan',price:'$0.65/mo',features:['1 Bot session','50+ commands','Basic support']},
+    {name:'Pro Plan',price:'$1/mo',features:['3 Bot sessions','All commands','Priority support','Auto-updates'],popular:true},
+    {name:'Lifetime',price:'$5',features:['Unlimited bots','All features forever','VIP support']},
+  ];
+  return `<div class="fade-up">
+    ${pageHeader('💳 Payments','Upgrade <span style="color:#00cc88">Your Plan</span>','Secure payments via EcoCash, Binance & MiniPay.')}
+    <!-- Plans -->
+    <div class="section-title" style="margin-bottom:14px">◈ Choose a Plan</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:28px">
+      ${plans.map(p=>`
+        <div class="card" style="padding:20px;${p.popular?'border-color:rgba(0,255,204,.4)':''}">
+          ${p.popular?`<div class="badge" style="margin-bottom:10px">⭐ Popular</div><br>`:''}
+          <div style="font-weight:700;font-size:15px;margin-bottom:6px">${p.name}</div>
+          <div style="font-family:'Rajdhani',sans-serif;font-size:28px;font-weight:900;color:#00ffcc;margin-bottom:14px">${p.price}</div>
+          <ul style="list-style:none;margin-bottom:16px">${p.features.map(f=>`<li style="color:#6688aa;font-size:13px;padding:3px 0;display:flex;align-items:center;gap:8px"><span style="color:#00ffcc">✓</span>${f}</li>`).join('')}</ul>
+          <button class="btn btn-cyan" onclick="showPayModal('${p.name}','${p.price}','${p.features.join(', ')}')" style="width:100%;padding:10px;border-radius:7px">Get Started</button>
+        </div>`).join('')}
+    </div>
+    <!-- Payment methods -->
+    <div class="section-title" style="margin-bottom:14px">◈ Payment Methods</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px">
+      ${methods.map(m=>`
+        <div class="card" style="padding:20px">
+          <div style="font-size:32px;margin-bottom:12px">${m.icon}</div>
+          <div style="font-weight:700;font-size:15px;margin-bottom:4px">${m.name}</div>
+          <div style="font-family:'Share Tech Mono',monospace;font-size:12px;color:#00ffcc;margin-bottom:8px">${m.num}</div>
+          <p style="color:#6688aa;font-size:12px;margin-bottom:14px">${m.desc}</p>
+          <ol style="margin-left:16px;margin-bottom:16px">${m.steps.map(s=>`<li style="color:#6688aa;font-size:12px;padding:2px 0">${s}</li>`).join('')}</ol>
+          <p style="color:#ffa500;font-size:12px;padding:10px;background:rgba(255,165,0,.06);border:1px solid rgba(255,165,0,.15);border-radius:6px">⚠ After payment, send proof to <strong>${SUPPORT.phone}</strong> on WhatsApp for instant activation.</p>
+        </div>`).join('')}
+    </div>
+  </div>`;
+},
+
+// ── TUTORIALS PAGE ──
+tutorials(){
+  const vids = [
+    {t:'Deploy a WhatsApp Bot on Render (Free)',dur:'12 min',lvl:'Beginner',icon:'🎬',col:'#0077ff'},
+    {t:'Baileys Library Full Setup 2025',dur:'28 min',lvl:'Intermediate',icon:'🤖',col:'#00ffcc'},
+    {t:'Adding Commands to Your Bot',dur:'18 min',lvl:'Beginner',icon:'💻',col:'#ff6b35'},
+    {t:'Multi-Session Bot Architecture',dur:'35 min',lvl:'Advanced',icon:'🧠',col:'#0077ff'},
+    {t:'Monetizing Your Bot — Full Guide',dur:'22 min',lvl:'Beginner',icon:'💰',col:'#00cc88'},
+    {t:'Custom Pairing Page with Express',dur:'14 min',lvl:'Intermediate',icon:'🖥',col:'#ff6b35'},
+  ];
+  const lc = {Beginner:'#00cc88',Intermediate:'#0077ff',Advanced:'#ff6b35'};
+  return `<div class="fade-up">
+    ${pageHeader('🎓 Tutorials','Learn <span style="color:#00ffcc">Bot Development</span>','Beginner to advanced. All tutorials on our YouTube channel.')}
+    <div style="background:linear-gradient(135deg,rgba(255,0,0,.1),rgba(255,100,0,.06));border:1px solid rgba(255,0,0,.25);border-radius:12px;padding:18px 20px;margin-bottom:22px;display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+      <div style="font-size:44px">▶️</div>
+      <div style="flex:1;min-width:200px">
+        <div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:16px;margin-bottom:4px">📺 ScottyX Tech — YouTube Channel</div>
+        <p style="color:#6688aa;font-size:13px">Full video tutorials on WhatsApp bots, money-making tech, and ScottyHub guides. Subscribe & turn on notifications!</p>
+      </div>
+      <a href="${YOUTUBE_CHANNEL}" target="_blank" rel="noreferrer" style="text-decoration:none">
+        <button class="btn btn-red" style="padding:11px 22px;border-radius:8px;font-size:13px">▶ Watch on YouTube</button>
+      </a>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px">
+      ${vids.map(v=>`
+        <div class="card" style="padding:20px;cursor:pointer">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px">
+            <span style="font-size:30px">${v.icon}</span>
+            <span style="font-size:9px;font-weight:700;padding:3px 8px;border-radius:3px;background:${lc[v.lvl]}15;color:${lc[v.lvl]};border:1px solid ${lc[v.lvl]}33;font-family:'Share Tech Mono',monospace">${v.lvl}</span>
+          </div>
+          <div style="font-weight:700;font-size:13px;margin-bottom:6px;line-height:1.5">${v.t}</div>
+          <div style="color:#6688aa;font-size:12px;margin-bottom:14px;font-family:'Share Tech Mono',monospace">⏱ ${v.dur}</div>
+          <a href="${YOUTUBE_CHANNEL}" target="_blank" rel="noreferrer" style="text-decoration:none">
+            <button class="btn btn-outline" style="width:100%;padding:9px;border-radius:7px;font-size:12px">▶ Watch on YouTube</button>
+          </a>
+        </div>`).join('')}
+    </div>
+  </div>`;
+},
+
+// ── ACTIVITY PAGE ──
+activity(){
+  return `<div class="fade-up">
+    ${pageHeader('📋 Activity','Account <span style="color:#00ffcc">Activity Log</span>','Every login, logout and security event on your account.')}
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:20px">
+      ${statCard('✅','1','Total Logins','#00cc88')}
+      ${statCard('📋','1','Total Events','#00ffcc')}
+      ${statCard('📧','Yes','Verified','#00cc88')}
+      ${statCard('🛡','OFF','2FA','#6688aa')}
+    </div>
+    <div class="card" style="padding:14px 16px;display:flex;gap:12px;align-items:flex-start">
+      <div style="width:36px;height:36px;border-radius:8px;background:#00cc8815;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">✅</div>
+      <div style="flex:1">
+        <div style="font-weight:700;font-size:13px;margin-bottom:2px">LOGIN</div>
+        <div style="color:#6688aa;font-size:11px;font-family:'Share Tech Mono',monospace">Signed in successfully</div>
+      </div>
+      <div style="text-align:right;flex-shrink:0">
+        <div style="font-size:11px;color:#00cc88;font-family:'Share Tech Mono',monospace;font-weight:700">LOGIN</div>
+        <div style="font-size:10px;color:#6688aa;margin-top:4px">${new Date().toLocaleString()}</div>
+      </div>
+    </div>
+  </div>`;
+},
+
+// ── PROFILE PAGE ──
+profile(){
+  const u = S.user||{};
+  return `<div class="fade-up">
+    ${pageHeader('👤 Profile','Your <span style="color:#00ffcc">Account</span>','Manage your account settings and profile.')}
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:700px">
+      <div class="card" style="padding:22px;grid-column:1/-1">
+        <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px">
+          <div style="width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#00ffcc,#0077ff);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:26px;color:#060b14;flex-shrink:0">${(u.name||'U')[0].toUpperCase()}</div>
+          <div>
+            <div style="font-weight:700;font-size:18px;font-family:'Rajdhani',sans-serif">${u.name||'User'}</div>
+            <div style="color:#6688aa;font-size:13px">${u.email||''}</div>
+            <div class="badge" style="margin-top:6px">${u.plan?.toUpperCase()||'FREE'} PLAN</div>
+          </div>
+        </div>
+        <div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:14px;color:#00ffcc;margin-bottom:14px">Edit Profile</div>
+        <input class="input" id="prof-name" placeholder="Username" value="${u.name||''}" style="margin-bottom:12px"/>
+        <input class="input" id="prof-bio" placeholder="Bio (optional)" style="margin-bottom:16px"/>
+        <button class="btn btn-cyan" onclick="saveProfile()" style="padding:11px 24px;border-radius:8px">Save Changes</button>
+        <div id="prof-msg" style="display:none;margin-top:10px;font-size:13px;color:#00cc88"></div>
+      </div>
+      <div class="card" style="padding:18px">
+        <div style="font-weight:700;font-size:14px;margin-bottom:12px">🔐 Security</div>
+        <div style="font-size:13px;color:#6688aa;margin-bottom:8px">Email verified: <span style="color:#00cc88">✓ Yes</span></div>
+        <div style="font-size:13px;color:#6688aa;margin-bottom:16px">2FA: <span style="color:#6688aa">Not set up</span></div>
+        <button class="btn btn-ghost" style="width:100%;padding:10px;border-radius:8px;font-size:13px">Change Password</button>
+      </div>
+      <div class="card" style="padding:18px">
+        <div style="font-weight:700;font-size:14px;margin-bottom:12px">🚪 Danger Zone</div>
+        <p style="color:#6688aa;font-size:13px;margin-bottom:14px">Log out from your account securely.</p>
+        <button class="btn btn-red" onclick="doLogout()" style="width:100%;padding:10px;border-radius:8px;font-size:13px">Logout</button>
+      </div>
+    </div>
+  </div>`;
+},
+
+// ── SUPPORT PAGE ──
+support(){
+  const contacts = [
+    {icon:'💬',t:'WhatsApp',d:'Fastest response — usually within 1 hour',val:SUPPORT.phone,action:`https://wa.me/${SUPPORT.phone.replace(/[^0-9]/g,'')}`,col:'#25d366'},
+    {icon:'📧',t:'Email',d:'Full support for billing and technical issues',val:SUPPORT.email,action:`mailto:${SUPPORT.email}`,col:'#0077ff'},
+    {icon:'✈️',t:'Telegram',d:'Community & updates channel',val:'@Scottycrg',action:'https://t.me/Scottycrg',col:'#2AABEE'},
+    {icon:'▶️',t:'YouTube',d:'Video tutorials and demos',val:'@scottyx-tech',action:YOUTUBE_CHANNEL,col:'#ff0000'},
+  ];
+  const faqs = [
+    {q:'How do I get a WhatsApp bot?',a:'Click "Bot Rental" in the sidebar, choose a plan, and follow the payment instructions. Your bot will be live within 24 hours.'},
+    {q:'Which payment methods do you accept?',a:'We accept EcoCash, Binance Pay, and MiniPay. After payment, send proof to our WhatsApp for instant activation.'},
+    {q:'Can I self-host the bot for free?',a:'Yes! Get the free tier bot, deploy it on Render (free tier), and use our pairing page to connect your WhatsApp.'},
+    {q:'How do referrals work?',a:'Share your referral link. When someone signs up and pays for a plan, you earn 20% commission, paid weekly.'},
+    {q:'What if my bot goes offline?',a:'Render free tier spins down after 15 min of inactivity. Upgrade to a paid plan or use UptimeRobot to keep it alive.'},
+  ];
+  return `<div class="fade-up">
+    ${pageHeader('💬 Support','Get <span style="color:#25d366">Help</span>','We respond fast. WhatsApp is the quickest option.')}
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-bottom:28px">
+      ${contacts.map(c=>`
+        <a href="${c.action}" target="_blank" rel="noreferrer" style="text-decoration:none">
+          <div class="card" style="padding:20px;cursor:pointer">
+            <div style="font-size:32px;margin-bottom:12px">${c.icon}</div>
+            <div style="font-weight:700;font-size:15px;margin-bottom:4px">${c.t}</div>
+            <div style="font-size:12px;color:${c.col};font-family:'Share Tech Mono',monospace;margin-bottom:6px">${c.val}</div>
+            <p style="color:#6688aa;font-size:12px">${c.d}</p>
+          </div>
+        </a>`).join('')}
+    </div>
+    <div class="section-title" style="margin-bottom:14px">◈ FAQ</div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      ${faqs.map((f,i)=>`
+        <div class="card" style="padding:16px 18px;cursor:pointer" onclick="toggleFaq(${i})">
+          <div style="display:flex;justify-content:space-between;align-items:center;font-weight:700;font-size:14px">
+            <span>${f.q}</span>
+            <span id="faq-icon-${i}" style="color:#00ffcc;font-size:18px;transition:transform .2s;flex-shrink:0;margin-left:10px">+</span>
+          </div>
+          <div id="faq-ans-${i}" style="display:none;color:#6688aa;font-size:13px;margin-top:10px;line-height:1.7">${f.a}</div>
+        </div>`).join('')}
+    </div>
+  </div>`;
+},
+
+// ── LEGAL PAGE ──
+legal(){
+  return `<div class="fade-up">
+    ${pageHeader('📄 Legal','Terms & <span style="color:#6688aa">Privacy</span>','ScottyHub legal information and policies.')}
+    <div class="card" style="padding:24px;max-width:700px">
+      <div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:16px;color:#00ffcc;margin-bottom:16px">📋 Terms of Service</div>
+      <p style="color:#6688aa;font-size:13px;line-height:1.8;margin-bottom:16px">By using ScottyHub, you agree to use our services for lawful purposes only. You may not use our platform to distribute spam, harmful content, or engage in fraudulent activities.</p>
+      <div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:16px;color:#00ffcc;margin-bottom:16px">🔒 Privacy Policy</div>
+      <p style="color:#6688aa;font-size:13px;line-height:1.8;margin-bottom:16px">We collect only the information necessary to provide our services: your email, username, and usage data. We do not sell your personal data to third parties. Your data is stored securely using industry-standard encryption.</p>
+      <div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:16px;color:#00ffcc;margin-bottom:16px">💰 Refund Policy</div>
+      <p style="color:#6688aa;font-size:13px;line-height:1.8;margin-bottom:16px">Digital products are non-refundable once delivered. If you experience technical issues with a service, contact us within 48 hours and we will work to resolve the issue or provide a credit.</p>
+      <div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:16px;color:#00ffcc;margin-bottom:16px">⚠ Disclaimer</div>
+      <p style="color:#6688aa;font-size:13px;line-height:1.8">ScottyHub is an independent platform. We are not affiliated with WhatsApp, Meta, or any third-party API providers. Use of WhatsApp bots is subject to WhatsApp's own terms of service.</p>
+    </div>
+  </div>`;
+},
+
+marketing(){
+  const tools=[
+    {icon:'📣',t:'Bulk WA Blaster',d:'Send promo messages to thousands at once',tag:'PRO',price:'$0.65/mo'},
+    {icon:'⏰',t:'Message Scheduler',d:'Schedule messages to auto-send at set times',tag:'PRO',price:'$0.65/mo'},
+    {icon:'🤖',t:'Auto-Responder',d:'Keyword triggers with instant automated replies',tag:'FREE',price:null},
+    {icon:'📊',t:'Campaign Analytics',d:'Track opens, clicks & engagement stats',tag:'PRO',price:'$1/mo'},
+    {icon:'👥',t:'Group Inviter',d:'Auto-invite contacts to multiple WA groups',tag:'PRO',price:'$0.65/mo'},
+    {icon:'🎯',t:'Targeted Lists',d:'Segment contacts for targeted campaigns',tag:'FREE',price:null},
+  ];
+  return `<div class="fade-up">
+    ${pageHeader('📢 Marketing','Marketing <span style="color:#ff6b35">Power Tools</span>','Scale your business with WhatsApp marketing automation.')}
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px">
+      ${tools.map(t=>`
+        <div class="card" style="padding:20px;position:relative">
+          <span style="position:absolute;top:14px;right:14px;font-size:9px;font-weight:700;padding:2px 8px;border-radius:3px;font-family:'Share Tech Mono',monospace;background:${t.tag==='FREE'?'rgba(0,200,100,.1)':'rgba(150,0,255,.1)'};color:${t.tag==='FREE'?'#00cc88':'#9944ff'};border:1px solid ${t.tag==='FREE'?'rgba(0,200,100,.3)':'rgba(150,0,255,.3)'};">${t.tag}</span>
+          <div style="font-size:32px;margin-bottom:12px">${t.icon}</div>
+          <div style="font-weight:700;font-size:14px;margin-bottom:6px">${t.t}</div>
+          <p style="color:#6688aa;font-size:12px;line-height:1.5;margin-bottom:14px">${t.d}</p>
+          ${t.tag==='FREE'?`<button class="btn btn-outline" style="width:100%;padding:9px;border-radius:7px;font-size:12px">Use Free →</button>`:`<button class="btn btn-cyan" onclick="navigate('payment')" style="width:100%;padding:9px;border-radius:7px;font-size:12px">Unlock — ${t.price}</button>`}
+        </div>`).join('')}
+    </div>
+  </div>`;
+},
+
+setup(){
+  const steps=[
+    {s:'01',t:'Choose Package',d:'Pick from Starter, Pro or Custom',icon:'📦',col:'#0077ff'},
+    {s:'02',t:'Make Payment',d:'EcoCash, Binance or MiniPay',icon:'💳',col:'#00ffcc'},
+    {s:'03',t:'Send Details',d:'Share your Render/hosting credentials',icon:'📨',col:'#ff6b35'},
+    {s:'04',t:'Bot Goes Live',d:'Deployed, tested & handed over in 24hrs',icon:'🚀',col:'#00cc88'},
+  ];
+  const plans=[
+    {name:'Starter Setup',price:'$0.65',desc:'1 bot on Render + basic config + tutorial',col:'#0077ff'},
+    {name:'Pro Setup',price:'$1',desc:'Full premium bot with 50+ commands + custom menu',col:'#00ffcc'},
+    {name:'Custom Setup',price:'$2',desc:'Fully custom bot from scratch — your vision, our code',col:'#ff6b35'},
+  ];
+  return `<div class="fade-up">
+    ${pageHeader('🛠 Bot Setup','We Deploy Your <span style="color:#00ffcc">Bot For You</span>','You pay — we handle everything. Bot live within 24 hours, guaranteed.')}
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:26px">
+      ${steps.map(s=>`<div class="card" style="padding:18px">
+        <div style="font-family:'Share Tech Mono',monospace;font-size:9px;color:${s.col};letter-spacing:2px;margin-bottom:10px">STEP ${s.s}</div>
+        <div style="font-size:28px;margin-bottom:10px">${s.icon}</div>
+        <div style="font-weight:700;font-size:13px;margin-bottom:6px">${s.t}</div>
+        <p style="color:#6688aa;font-size:12px;line-height:1.6">${s.d}</p>
+      </div>`).join('')}
+    </div>
+    <div style="display:flex;gap:14px;flex-wrap:wrap">
+      ${plans.map(p=>`<div class="card" style="flex:1 1 180px;padding:20px">
+        <div style="font-weight:700;font-size:14px;margin-bottom:6px">${p.name}</div>
+        <div style="font-family:'Rajdhani',sans-serif;font-size:32px;font-weight:900;color:${p.col};margin-bottom:8px">${p.price}</div>
+        <p style="color:#6688aa;font-size:12px;margin-bottom:16px;line-height:1.6">${p.desc}</p>
+        <button class="btn btn-cyan" onclick="navigate('payment')" style="width:100%;padding:10px;border-radius:7px">Order Now</button>
+      </div>`).join('')}
+    </div>
+  </div>`;
+},
+
+};
+
+// ════════════════════════════════════════════
+//  PAGE INIT FUNCTIONS (called after render)
+// ════════════════════════════════════════════
+const pageInits = {
+  dashboard: initDashboard,
+  movies: initMovies,
+  music: initMusic,
+  sports: initSports,
+  crypto: initCrypto,
+  community: initCommunity,
+  bots: initBots,
+  ai: scrollAI,
+};
+
+function initDashboard(){
+  // Animate counters
+  let s=0;
+  const t=setInterval(()=>{
+    s+=1/50; const e=1-Math.pow(1-Math.min(s,1),3);
+    const set=(id,v)=>{ const el=_el(id); if(el)el.textContent=Math.round(v*e).toLocaleString(); };
+    set('stat-u',1247); set('stat-b',89); set('stat-d',4300); set('stat-r',1800);
+    if(s>=1)clearInterval(t);
+  }, 20);
+}
+
+function initMovies(){
+  if(!S.movies.trending.length) loadTrending();
+}
+async function loadTrending(){
+  S.movies.loading=true; updateMoviesGrid();
+  try {
+    const r = await fetch(`${RAPID_API}/titles?list=top_rated_english_250&limit=24&info=base_info`, {
+      headers: RAPID_HEADERS
+    });
+    const d = await r.json();
+    S.movies.trending = d.results||[];
+    S.movies.tab = 'trending';
+  } catch(e){ console.error('RapidAPI error', e); }
+  S.movies.loading=false; updateMoviesGrid();
+}
+async function searchMovies(){
+  const q = _v('movie-search').trim();
+  if(!q) return;
+  S.movies.query=q; S.movies.loading=true; updateMoviesGrid();
+  try {
+    const r = await fetch(`${RAPID_API}/titles/search/title/${encodeURIComponent(q)}?exact=false&info=base_info&limit=24`, {
+      headers: RAPID_HEADERS
+    });
+    const d = await r.json();
+    S.movies.results = d.results||[];
+    S.movies.tab='search';
+  } catch(e){ console.error(e); }
+  S.movies.loading=false; updateMoviesGrid();
+}
+function moviesTab(t){ S.movies.tab=t; updateMoviesGrid(); }
+function updateMoviesGrid(){
+  const el=_el('movies-grid'); if(!el)return;
+  const list = S.movies.tab==='trending'?S.movies.trending:S.movies.results;
+  if(S.movies.loading){ el.innerHTML='<div style="text-align:center;padding:40px;color:#6688aa"><span class="spinner" style="border-color:rgba(0,255,204,.2);border-top-color:#00ffcc;width:24px;height:24px"></span></div>'; return; }
+  if(!list.length){ el.innerHTML='<div style="text-align:center;padding:48px"><div style="font-size:48px;margin-bottom:12px">🎬</div><p style="color:#6688aa">No results found.</p></div>'; return; }
+  el.innerHTML=`<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:14px">
+    ${list.map(m=>`
+      <div class="card" style="cursor:pointer;overflow:hidden" onclick="showMovieDetail(${m.id},'${(m.media_type||'movie')}')">
+        ${m.primaryImage?.url?`<img src="${m.primaryImage.url}" alt="${(m.title||m.name||'').replace(/'/g,'')}" style="width:100%;height:220px;object-fit:cover" loading="lazy"/>`
+          :`<div style="width:100%;height:220px;background:rgba(0,255,204,.04);display:flex;align-items:center;justify-content:center;font-size:40px">🎬</div>`}
+        <div style="padding:10px">
+          <div style="font-weight:700;font-size:12px;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${m.title||m.name||'Unknown'}</div>
+          <div style="display:flex;align-items:center;gap:6px">
+            <span style="color:#F0B90B;font-size:11px">★ ${(m.vote_average||0).toFixed(1)}</span>
+            <span style="color:#6688aa;font-size:10px;font-family:'Share Tech Mono',monospace">${(m.media_type||'MOVIE').toUpperCase()}</span>
+          </div>
+        </div>
+      </div>`).join('')}
+  </div>`;
+}
+
+async function showMovieDetail(id){
+  try {
+    const r=await fetch(`${RAPID_API}/titles/${id}?info=base_info`, {headers: RAPID_HEADERS});
+    const d=await r.json();
+    const m=d.results||d;
+    const title=m.titleText?.text||m.originalTitleText?.text||'Unknown';
+    const poster=m.primaryImage?.url||'';
+    const rating=m.ratingsSummary?.aggregateRating||0;
+    const year=m.releaseYear?.year||'';
+    const type=m.titleType?.text||'Movie';
+    const castR=await fetch(`${RAPID_API}/titles/${id}/main_actors`,{headers:RAPID_HEADERS});
+    const castD=await castR.json();
+    const cast=(castD.results||[]).slice(0,6).map(a=>a.node?.name?.nameText?.text||'').filter(Boolean);
+    openModal(`
+      <div style="max-width:600px;width:100%;background:#0a0f1a;border:1px solid rgba(0,255,204,.15);border-radius:14px;overflow:hidden">
+        ${poster
+          ?`<img src="${poster}" style="width:100%;height:220px;object-fit:cover" onerror="this.style.display='none'"/>`
+          :`<div style="height:160px;background:linear-gradient(135deg,rgba(0,119,255,.2),rgba(0,255,204,.1));display:flex;align-items:center;justify-content:center;font-size:60px">🎬</div>`}
+        <div style="padding:20px">
+          <div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:20px;margin-bottom:6px">${title}</div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px">
+            ${rating?`<span style="color:#F0B90B;font-size:13px">★ ${Number(rating).toFixed(1)}</span>`:''}
+            ${year?`<span style="color:#6688aa;font-size:12px">${year}</span>`:''}
+            <span style="background:rgba(0,255,204,.1);color:#00ffcc;font-size:9px;padding:2px 8px;border-radius:3px;font-family:'Share Tech Mono',monospace">${type.toUpperCase()}</span>
+          </div>
+          ${cast.length?`<div style="margin-bottom:14px"><div style="font-size:10px;color:#6688aa;font-family:'Share Tech Mono',monospace;margin-bottom:6px;letter-spacing:1px">MAIN CAST</div><div style="display:flex;flex-wrap:wrap;gap:6px">${cast.map(a=>`<span style="background:rgba(0,119,255,.1);color:#0af;font-size:11px;padding:3px 10px;border-radius:4px;border:1px solid rgba(0,119,255,.2)">${a}</span>`).join('')}</div></div>`:''}
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <a href="https://www.youtube.com/results?search_query=${encodeURIComponent(title+' trailer')}" target="_blank" rel="noreferrer" style="text-decoration:none">
+              <button class="btn btn-red" style="padding:10px 18px;border-radius:7px;font-size:12px">▶ Watch Trailer</button>
+            </a>
+            <a href="https://www.google.com/search?q=watch+${encodeURIComponent(title)}+online+free" target="_blank" rel="noreferrer" style="text-decoration:none">
+              <button class="btn btn-outline" style="padding:10px 18px;border-radius:7px;font-size:12px">🌐 Find Online</button>
+            </a>
+            <button class="btn btn-ghost" onclick="closeModal()" style="padding:10px 18px;border-radius:7px;font-size:12px">✕ Close</button>
+          </div>
+        </div>
+      </div>`);
+  } catch(e){ console.error(e); }
+}
+
+function initMusic(){
+  if(!S.music.top.length) loadTopMusic();
+}
+async function loadTopMusic(){
+  S.music.loading=true; updateMusicGrid();
+  try {
+    const r=await fetch(`${ITUNES_API}?term=top+hits+2025&media=music&limit=20&entity=song`);
+    const d=await r.json();
+    S.music.top=d.results||[];
+  } catch(e){ console.error(e); }
+  S.music.loading=false; updateMusicGrid();
+}
+async function searchMusic(){
+  const q=_v('music-search').trim(); if(!q)return;
+  S.music.query=q; S.music.loading=true; updateMusicGrid();
+  try {
+    const r=await fetch(`${ITUNES_API}?term=${encodeURIComponent(q)}&media=music&limit=20&entity=song`);
+    const d=await r.json();
+    S.music.results=d.results||[]; S.music.tab='search';
+  } catch(e){ console.error(e); }
+  S.music.loading=false; updateMusicGrid();
+}
+function updateMusicGrid(){
+  const el=_el('music-grid'); if(!el)return;
+  const list=S.music.tab==='search'&&S.music.results.length?S.music.results:S.music.top;
+  if(S.music.loading){el.innerHTML='<div style="text-align:center;padding:40px;color:#6688aa"><span class="spinner" style="border-color:rgba(0,255,204,.2);border-top-color:#00ffcc;width:24px;height:24px"></span></div>';return;}
+  if(!list.length){el.innerHTML='<div style="text-align:center;padding:48px"><div style="font-size:48px;margin-bottom:12px">🎵</div><p style="color:#6688aa">Loading top hits...</p></div>';return;}
+  el.innerHTML=`<div style="display:flex;flex-direction:column;gap:8px">
+    ${list.map((t,i)=>`
+      <div class="card" style="display:flex;align-items:center;gap:14px;padding:14px 16px">
+        <div style="font-size:16px;font-family:'Share Tech Mono',monospace;color:#6688aa;width:24px;text-align:center;flex-shrink:0">${i+1}</div>
+        <img src="${t.artworkUrl60||t.artworkUrl100||''}" alt="" style="width:48px;height:48px;border-radius:8px;object-fit:cover;flex-shrink:0" onerror="this.style.display='none'" loading="lazy"/>
+        <div style="flex:1;min-width:0">
+          <div style="font-weight:700;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${t.trackName||'Unknown'}</div>
+          <div style="color:#6688aa;font-size:12px;margin-top:2px">${t.artistName||''}</div>
+        </div>
+        ${t.previewUrl?`<audio controls src="${t.previewUrl}" style="height:28px;width:110px;opacity:.7;flex-shrink:0"></audio>`:''}
+      </div>`).join('')}
+  </div>`;
+}
+
+function initSports(){ if(!S.sports.data.length) loadSports(S.sports.tab); }
+async function loadSports(type){
+  S.sports.tab=type; S.sports.loading=true; updateSportsContent();
+  const endpoints = {
+    livescores:`${SPORTSDB_API}/livescore.php?l=4328`,
+    basketball:`${SPORTSDB_API}/livescore.php?l=4387`,
+    cricket:`${SPORTSDB_API}/livescore.php?l=4749`,
+    rugby:`${SPORTSDB_API}/livescore.php?l=4335`,
+  };
+  try {
+    const r=await fetch(endpoints[type]||endpoints.livescores);
+    const d=await r.json();
+    S.sports.data=d.events||[];
+  } catch(e){ S.sports.data=[]; }
+  S.sports.loading=false; updateSportsContent();
+}
+function sportTab(t){ loadSports(t); }
+function updateSportsContent(){
+  const el=_el('sports-content'); if(!el)return;
+  if(S.sports.loading){el.innerHTML='<div style="text-align:center;padding:40px;color:#6688aa"><span class="spinner" style="border-color:rgba(0,255,204,.2);border-top-color:#00ffcc;width:24px;height:24px"></span></div>';return;}
+  if(!S.sports.data.length){el.innerHTML='<div style="text-align:center;padding:48px"><div style="font-size:48px;margin-bottom:12px">⚽</div><p style="color:#6688aa">No live events right now. Check back later!</p></div>';return;}
+  el.innerHTML=`<div style="display:flex;flex-direction:column;gap:10px">
+    ${S.sports.data.map(e=>`
+      <div class="card" style="padding:16px 18px">
+        <div style="font-size:10px;color:#6688aa;font-family:'Share Tech Mono',monospace;margin-bottom:8px">${e.strLeague||''}  •  ${e.dateEvent||''}</div>
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+          <div style="flex:1;font-weight:700;font-size:14px">${e.strHomeTeam}</div>
+          <div style="font-family:'Rajdhani',sans-serif;font-size:22px;font-weight:900;color:#00ffcc;text-align:center;white-space:nowrap">${e.intHomeScore??'-'} – ${e.intAwayScore??'-'}</div>
+          <div style="flex:1;font-weight:700;font-size:14px;text-align:right">${e.strAwayTeam}</div>
+        </div>
+        ${e.strStatus?`<div style="text-align:center;margin-top:8px"><span style="font-size:10px;padding:2px 8px;border-radius:3px;${e.strStatus==='Match Finished'?'background:rgba(0,200,100,.1);color:#00cc88':'background:rgba(255,165,0,.1);color:#ffa500'};font-family:'Share Tech Mono',monospace">${e.strStatus}</span></div>`:''}
+      </div>`).join('')}
+  </div>`;
+}
+
+function initCrypto(){ if(!S.crypto.coins.length) loadCrypto(); }
+async function loadCrypto(){
+  S.crypto.loading=true; updateCryptoContent();
+  try {
+    const r=await fetch(`${CRYPTO_API}/coins/markets?vs_currency=usd&ids=bitcoin,ethereum,binancecoin,tether,ripple,solana,dogecoin,cardano&order=market_cap_desc&sparkline=false`);
+    S.crypto.coins=await r.json();
+  } catch(e){ console.error(e); }
+  try {
+    const r=await fetch(EXCHANGE_API);
+    const d=await r.json();
+    S.crypto.forex=d.rates;
+  } catch(e){ console.error(e); }
+  S.crypto.loading=false; updateCryptoContent();
+}
+function cryptoTab(t){ S.crypto.tab=t; updateCryptoContent(); }
+function updateCryptoContent(){
+  const el=_el('crypto-content'); if(!el)return;
+  if(S.crypto.loading){el.innerHTML='<div style="text-align:center;padding:40px;color:#6688aa"><span class="spinner" style="border-color:rgba(0,255,204,.2);border-top-color:#00ffcc;width:24px;height:24px"></span></div>';return;}
+  if(S.crypto.tab==='crypto'){
+    if(!S.crypto.coins.length){el.innerHTML='<div style="text-align:center;padding:40px;color:#6688aa">Failed to load crypto data</div>';return;}
+    el.innerHTML=`<div style="display:flex;flex-direction:column;gap:8px">
+      ${S.crypto.coins.map(c=>{const up=c.price_change_percentage_24h>=0;return`
+        <div class="card" style="display:flex;align-items:center;gap:14px;padding:14px 16px">
+          <img src="${c.image}" alt="${c.name}" style="width:36px;height:36px;border-radius:50%" loading="lazy"/>
+          <div style="flex:1"><div style="font-weight:700;font-size:14px">${c.name}</div><div style="color:#6688aa;font-size:11px;font-family:'Share Tech Mono',monospace">${c.symbol?.toUpperCase()}</div></div>
+          <div style="text-align:right">
+            <div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:16px">$${(c.current_price||0).toLocaleString()}</div>
+            <div style="font-size:12px;color:${up?'#00cc88':'#ff4444'};font-family:'Share Tech Mono',monospace">${up?'▲':'▼'} ${Math.abs(c.price_change_percentage_24h||0).toFixed(2)}%</div>
+          </div>
+        </div>`;}).join('')}
+    </div>`;
+  } else {
+    if(!S.crypto.forex){el.innerHTML='<div style="text-align:center;padding:40px;color:#6688aa">Failed to load forex data</div>';return;}
+    el.innerHTML=`<div class="card" style="padding:14px;margin-bottom:14px">
+      <div style="font-size:11px;color:#6688aa;font-family:'Share Tech Mono',monospace;margin-bottom:8px">1 USD equals:</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px">
+        ${Object.entries(S.crypto.forex).filter(([k])=>['ZAR','BWP','ZWL','EUR','GBP','KES','NGN','GHS'].includes(k)).map(([k,v])=>`
+          <div style="background:rgba(0,255,204,.04);border:1px solid rgba(0,255,204,.08);border-radius:8px;padding:12px">
+            <div style="font-family:'Share Tech Mono',monospace;font-size:10px;color:#6688aa;margin-bottom:4px">${k}</div>
+            <div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:18px;color:#00ffcc">${typeof v==='number'?v.toLocaleString(undefined,{maximumFractionDigits:4}):v}</div>
+          </div>`).join('')}
+      </div>
+    </div>`;
+  }
+}
+
+function initCommunity(){ if(!S.posts.length) loadPosts(); }
+async function loadPosts(){
+  S.postsLoading=true; updatePostsList();
+  try {
+    const r=await fetch(`${API}/posts?page=1`,{headers:authH()});
+    const d=await r.json();
+    S.posts=Array.isArray(d)?d:[];
+  } catch(e){ console.error(e); }
+  S.postsLoading=false; updatePostsList();
+}
+async function loadMorePosts(){
+  S.postsPage++;
+  try {
+    const r=await fetch(`${API}/posts?page=${S.postsPage}`,{headers:authH()});
+    const d=await r.json();
+    if(Array.isArray(d)&&d.length) S.posts=[...S.posts,...d];
+  } catch(e){}
+  updatePostsList();
+}
+async function createPost(){
+  const content=_v('post-input').trim(); if(!content)return;
+  setBtnLoad('post-btn',true,'Posting...');
+  try {
+    const r=await fetch(`${API}/posts`,{method:'POST',headers:authH(),body:JSON.stringify({content})});
+    const d=await r.json();
+    if(r.ok){ S.posts=[d,...S.posts]; _el('post-input').value=''; updatePostsList(); }
+  } catch(e){}
+  setBtnLoad('post-btn',false,'Post');
+}
+async function toggleLike(postId){
+  try {
+    const r=await fetch(`${API}/posts/${postId}/like`,{method:'PUT',headers:authH()});
+    const d=await r.json();
+    S.posts=S.posts.map(p=>p.id===postId?{...p,likeCount:d.likes,liked:d.liked}:p);
+    updatePostsList();
+  } catch(e){}
+}
+function renderPost(p){
+  const init=(p.author?.username||'U')[0].toUpperCase();
+  return `<div class="card" style="padding:16px;margin-bottom:12px">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+      <div style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#00ffcc,#0077ff);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;color:#060b14;flex-shrink:0">${init}</div>
+      <div>
+        <div style="font-weight:700;font-size:14px">${p.author?.username||'User'}</div>
+        <div style="color:#6688aa;font-size:11px;font-family:'Share Tech Mono',monospace">${timeAgo(p.createdAt)}</div>
+      </div>
+    </div>
+    <p style="font-size:14px;line-height:1.7;margin-bottom:14px;color:#e8f4ff">${p.content}</p>
+    <div style="display:flex;gap:14px;border-top:1px solid rgba(255,255,255,.04);padding-top:12px">
+      <button class="btn btn-ghost" onclick="toggleLike('${p.id}')" style="padding:6px 14px;border-radius:20px;font-size:12px;letter-spacing:0;text-transform:none;font-family:'Exo 2',sans-serif;${p.liked?'color:#ff6b35;border-color:rgba(255,107,53,.3)':''}">
+        ${p.liked?'❤️':'🤍'} ${p.likeCount||0}
+      </button>
+      <span style="color:#6688aa;font-size:12px;display:flex;align-items:center;gap:5px">💬 ${p.commentCount||0} comments</span>
+    </div>
+  </div>`;
+}
+function updatePostsList(){
+  const el=_el('posts-list'); if(!el)return;
+  if(S.postsLoading){el.innerHTML='<div style="text-align:center;padding:40px;color:#6688aa"><span class="spinner" style="border-color:rgba(0,255,204,.2);border-top-color:#00ffcc;width:24px;height:24px"></span></div>';return;}
+  if(!S.posts.length){el.innerHTML='<div style="text-align:center;padding:48px;color:#6688aa"><div style="font-size:48px;margin-bottom:12px">💬</div><p>No posts yet. Be the first to post!</p></div>';return;}
+  el.innerHTML=S.posts.map(p=>renderPost(p)).join('');
+}
+
+function initBots(){
+  checkBotStatus();
+}
+async function checkBotStatus(){
+  const bots=[{name:'Scotty-C',url:BOT_PAIRING_URL},{name:'ScottyAI',url:'https://scottyai.onrender.com'}];
+  const grid=_el('bot-status-grid'); if(!grid)return;
+  const results=await Promise.all(bots.map(async b=>{
+    try {
+      const ctrl=new AbortController();
+      const t=setTimeout(()=>ctrl.abort(),6000);
+      const r=await fetch(`${b.url}/api`,{signal:ctrl.signal});
+      clearTimeout(t);
+      return{...b,ok:r.ok};
+    }catch{return{...b,ok:false};}
+  }));
+  grid.innerHTML=results.map(b=>`
+    <div class="card" style="padding:16px">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div style="width:10px;height:10px;border-radius:50%;background:${b.ok?'#00cc88':'#ff4444'};${b.ok?'animation:pulse 2s infinite':''}"></div>
+        <div><div style="font-weight:700;font-size:13px">${b.name}</div><div style="color:#6688aa;font-size:11px;font-family:'Share Tech Mono',monospace">${b.ok?'ONLINE':'OFFLINE'}</div></div>
+      </div>
+    </div>`).join('');
+}
+
+async function startPairing(){
+  const phone=_v('pair-phone').trim();
+  if(!phone||phone.length<10){alert('Enter a valid WhatsApp number (e.g. 263788...)');return;}
+  setBtnLoad('pair-btn',true,'Getting code...');
+  try {
+    const r=await fetch(`${BOT_PAIRING_URL}/pair?phone=${phone.replace(/\D/g,'')}`,{signal:AbortSignal.timeout(10000)});
+    const d=await r.json();
+    S.pairCode=d.code||Array.from({length:8},()=>'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'[Math.floor(Math.random()*36)]).join('').replace(/(.{4})/,'$1-');
+  } catch{
+    S.pairCode=Array.from({length:8},()=>'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'[Math.floor(Math.random()*36)]).join('').replace(/(.{4})/,'$1-');
+  }
+  const el=_el('pair-result');
+  if(el){
+    el.style.display='block';
+    el.innerHTML=`
+      <div style="font-size:11px;color:#6688aa;margin-bottom:6px;font-family:'Share Tech Mono',monospace">PAIRING CODE</div>
+      <div style="font-family:'Share Tech Mono',monospace;font-size:28px;font-weight:700;color:#00ffcc;letter-spacing:6px;background:rgba(0,255,204,.04);border:1px solid rgba(0,255,204,.2);border-radius:8px;padding:14px;text-align:center;margin-bottom:12px">${S.pairCode}</div>
+      <p style="color:#6688aa;font-size:12px">Go to WhatsApp → Linked Devices → Link a Device → Enter code above</p>`;
+  }
+  setBtnLoad('pair-btn',false,'Get Code');
+}
+
+function scrollAI(){
+  const el=_el('ai-messages'); if(el) el.scrollTop=el.scrollHeight;
+}
+
+async function sendAI(){
+  const input=_v('ai-input').trim(); if(!input||S.aiLoading)return;
+  S.aiMessages.push({role:'user',content:input});
+  _el('ai-input').value='';
+  S.aiLoading=true;
+  navigate('ai'); // re-render to show message
+  try {
+    const r=await fetch(`${API}/ai/chat`,{
+      method:'POST',
+      headers:{...authH(),'Content-Type':'application/json'},
+      body:JSON.stringify({messages:S.aiMessages.map(m=>({role:m.role,content:m.content}))})
+    });
+    const d=await r.json();
+    const reply=d.content?.[0]?.text||d.message||'Sorry, I could not get a response.';
+    S.aiMessages.push({role:'assistant',content:reply});
+  } catch(e){
+    S.aiMessages.push({role:'assistant',content:'⚠ Connection error. Please try again.'});
+  }
+  S.aiLoading=false;
+  navigate('ai');
+}
+function aiSuggestion(s){ S.aiMessages.push({role:'user',content:s}); S.aiLoading=true; navigate('ai'); setTimeout(()=>sendAIMsg(s),100); }
+async function sendAIMsg(input){
+  try {
+    const r=await fetch(`${API}/ai/chat`,{method:'POST',headers:{...authH(),'Content-Type':'application/json'},body:JSON.stringify({messages:S.aiMessages.map(m=>({role:m.role,content:m.content}))})});
+    const d=await r.json();
+    S.aiMessages.push({role:'assistant',content:d.content?.[0]?.text||d.message||'Sorry, no response.'});
+  } catch{ S.aiMessages.push({role:'assistant',content:'⚠ Connection error.'}); }
+  S.aiLoading=false; navigate('ai');
+}
+
+async function doDownload(){
+  const url=_v('dl-url').trim(); if(!url)return;
+  const tab=S.dlTab||'tiktok';
+  const btn=_el('dl-btn'); if(btn){btn.disabled=true;btn.innerHTML='<span class="spinner"></span> Downloading...';}
+  const result=_el('dl-result'); if(result)result.innerHTML='<div style="color:#6688aa;font-size:13px;text-align:center;padding:12px">Fetching download link...</div>';
+  try {
+    // Try Cobalt public instances
+    const instances=['https://co.wuk.sh','https://cobalt.tools'];
+    let data=null;
+    for(const inst of instances){
+      try {
+        const r=await fetch(`${inst}/api/json`,{
+          method:'POST',
+          headers:{'Content-Type':'application/json','Accept':'application/json'},
+          body:JSON.stringify({url,vCodec:'h264',vQuality:'720',aFormat:'mp3',isAudioOnly:tab==='youtube_audio'}),
+          signal:AbortSignal.timeout(8000)
+        });
+        data=await r.json(); if(data.status&&data.status!=='error')break;
+      }catch{}
+    }
+    if(data&&(data.status==='stream'||data.status==='redirect')){
+      result.innerHTML=`<div style="background:rgba(0,255,204,.04);border:1px solid rgba(0,255,204,.2);border-radius:8px;padding:14px;text-align:center">
+        <div style="color:#00cc88;font-weight:700;margin-bottom:12px">✅ Download ready!</div>
+        <a href="${data.url}" target="_blank" download style="text-decoration:none">
+          <button class="btn btn-cyan" style="padding:12px 24px;border-radius:8px;font-size:14px">⬇ Download File</button>
+        </a>
+      </div>`;
+    } else if(data&&data.status==='picker'&&data.picker?.length){
+      result.innerHTML=`<div style="font-size:13px;color:#6688aa;margin-bottom:10px">Select a file:</div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          ${data.picker.map((p,i)=>`
+            <a href="${p.url}" target="_blank" download style="text-decoration:none">
+              <div class="card" style="padding:12px 16px;display:flex;align-items:center;gap:12px;cursor:pointer">
+                ${p.thumb?`<img src="${p.thumb}" style="width:40px;height:40px;border-radius:6px;object-fit:cover"/>`:``}
+                <span style="font-size:13px">Option ${i+1}</span>
+                <span style="color:#00ffcc;margin-left:auto;font-size:12px">Download →</span>
+              </div>
+            </a>`).join('')}
+        </div>`;
+    } else {
+      result.innerHTML=`<div style="background:rgba(255,68,68,.06);border:1px solid rgba(255,68,68,.2);border-radius:8px;padding:14px;color:#ff8888;font-size:13px">
+        ⚠ Could not fetch download. The video may be private or the service is temporarily down. Try another URL.
+      </div>`;
+    }
+  }catch(e){
+    result.innerHTML=`<div style="background:rgba(255,68,68,.06);border:1px solid rgba(255,68,68,.2);border-radius:8px;padding:14px;color:#ff8888;font-size:13px">⚠ Download service unavailable. Please try again later.</div>`;
+  }
+  if(btn){btn.disabled=false;btn.innerHTML='Download';}
+}
+
+function toolTab(t){ S.tools.tab=t; navigate('tools'); }
+function generateQR(){
+  const v=_v('qr-input').trim(); if(!v)return;
+  S.tools.qrVal=v;
+  S.tools.qrResult=`https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(v)}&size=200x200&bgcolor=0a0f1a&color=00ffcc&format=png`;
+  const el=_el('qr-output');
+  if(el) el.innerHTML=`<img src="${S.tools.qrResult}" alt="QR Code" style="border-radius:10px;max-width:200px;border:1px solid rgba(0,255,204,.2)"/>`;
+}
+async function shortenURL(){
+  const v=_v('short-input').trim(); if(!v)return;
+  S.tools.shortInput=v;
+  const btn=document.querySelector('#page-content .btn-cyan');
+  try {
+    const r=await fetch(`https://tinyurl.com/api-create.php?url=${encodeURIComponent(v)}`);
+    const txt=await r.text();
+    S.tools.shortResult=txt;
+    const el=_el('short-output');
+    if(el) el.innerHTML=`<div style="background:rgba(0,255,204,.04);border:1px solid rgba(0,255,204,.2);border-radius:8px;padding:12px 14px;display:flex;align-items:center;gap:10px">
+      <a href="${txt}" target="_blank" style="color:#00ffcc;font-family:'Share Tech Mono',monospace;font-size:13px;flex:1">${txt}</a>
+      <button class="btn btn-outline" onclick="navigator.clipboard.writeText('${txt}');this.textContent='✓ Copied!';setTimeout(()=>this.textContent='Copy',2000)" style="padding:6px 12px;border-radius:6px;font-size:11px">Copy</button>
+    </div>`;
+  } catch{ alert('URL shortener failed. Try again.'); }
+}
+
+async function saveProfile(){
+  const name=_v('prof-name').trim();
+  try {
+    const r=await fetch(`${API}/users/me`,{method:'PUT',headers:authH(),body:JSON.stringify({username:name})});
+    const d=await r.json();
+    if(r.ok){
+      S.user={...S.user,name:d.user?.username||name};
+      localStorage.setItem('sh_current',JSON.stringify(S.user));
+      _el('nav-name').textContent=S.user.name?.split(' ')[0];
+      _el('sb-name').textContent=S.user.name;
+      const msg=_el('prof-msg'); if(msg){msg.style.display='block';msg.textContent='✅ Profile updated!';}
+    }
+  } catch(e){ alert('Failed to save profile'); }
+}
+
+function copyRef(link){
+  navigator.clipboard.writeText(link);
+  const btn=_el('copy-ref-btn'); if(btn){btn.textContent='✅ Copied!';setTimeout(()=>btn.textContent='📋 Copy Link',2000);}
+}
+
+function toggleFaq(i){
+  const ans=_el('faq-ans-'+i), icon=_el('faq-icon-'+i);
+  if(!ans)return;
+  const open=ans.style.display!=='none';
+  ans.style.display=open?'none':'block';
+  if(icon)icon.textContent=open?'+':'−';
+}
+
+// ════════════════════════════════════════════
+//  PAYMENT MODAL
+// ════════════════════════════════════════════
+function showPayModal(name, price, desc){
+  openModal(`
+    <div style="max-width:480px;width:100%;background:#0a0f1a;border:1px solid rgba(0,255,204,.2);border-radius:14px;padding:28px">
+      <div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:20px;color:#00ffcc;margin-bottom:6px">💳 Complete Payment</div>
+      <div style="font-weight:700;font-size:16px;margin-bottom:4px">${name}</div>
+      <div style="font-size:13px;color:#6688aa;margin-bottom:20px">${desc}</div>
+      <div style="font-family:'Rajdhani',sans-serif;font-size:36px;font-weight:900;color:#00ffcc;margin-bottom:20px">${price}</div>
+      <div style="background:rgba(0,255,204,.04);border:1px solid rgba(0,255,204,.12);border-radius:10px;padding:16px;margin-bottom:16px">
+        <div style="font-size:12px;font-weight:700;font-family:'Rajdhani',sans-serif;margin-bottom:10px">Payment Options:</div>
+        ${[
+          {icon:'💚',name:'EcoCash',val:PAYMENT.ecocash},
+          {icon:'🟡',name:'Binance Pay ID',val:PAYMENT.binance},
+          {icon:'💜',name:'MiniPay',val:PAYMENT.minipay},
+        ].map(p=>`<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+          <span style="font-size:18px">${p.icon}</span>
+          <div><div style="font-size:12px;color:#6688aa">${p.name}</div><div style="font-family:'Share Tech Mono',monospace;font-size:13px;color:#00ffcc">${p.val}</div></div>
+        </div>`).join('')}
+      </div>
+      <div style="background:rgba(255,165,0,.05);border:1px solid rgba(255,165,0,.15);border-radius:8px;padding:12px;font-size:12px;color:#ffa500;margin-bottom:16px">
+        ⚠ After payment, send proof screenshot to <strong>${SUPPORT.phone}</strong> on WhatsApp for instant activation.
+      </div>
+      <div style="display:flex;gap:8px">
+        <a href="https://wa.me/${SUPPORT.phone.replace(/[^0-9]/g,'')}" target="_blank" rel="noreferrer" style="text-decoration:none;flex:1">
+          <button class="btn btn-cyan" style="width:100%;padding:12px;border-radius:8px">💬 Pay via WhatsApp</button>
+        </a>
+        <button class="btn btn-ghost" onclick="closeModal()" style="padding:12px 18px;border-radius:8px">Cancel</button>
+      </div>
+    </div>`);
+}
+
+// ════════════════════════════════════════════
+//  MODAL SYSTEM
+// ════════════════════════════════════════════
+function openModal(html){
+  _el('modal-root').innerHTML=`<div class="modal-overlay" onclick="if(event.target===this)closeModal()">${html}</div>`;
+}
+function closeModal(){ _el('modal-root').innerHTML=''; }
+
+// ════════════════════════════════════════════
+//  UTILITIES
+// ════════════════════════════════════════════
+function timeAgo(ts){
+  if(!ts)return'';
+  const d=new Date(ts), now=new Date();
+  const diff=Math.floor((now-d)/1000);
+  if(diff<60)return'Just now';
+  if(diff<3600)return Math.floor(diff/60)+'m ago';
+  if(diff<86400)return Math.floor(diff/3600)+'h ago';
+  return Math.floor(diff/86400)+'d ago';
+}
+
+// ════════════════════════════════════════════
+//  SPLASH SCREEN
+// ════════════════════════════════════════════
+function runSplash(){
+  const msgs=['Initializing systems...','Connecting to servers...','Loading modules...','Verifying credentials...','Syncing database...','Preparing dashboard...','Almost ready...'];
+  const bar=_el('splash-bar'), txt=_el('splash-txt');
+  const total=5000, start=Date.now();
+  const t=setInterval(()=>{
+    const el=Date.now()-start;
+    const p=Math.min((el/total)*100,100);
+    if(bar)bar.style.width=p+'%';
+    if(txt)txt.textContent=msgs[Math.min(Math.floor((p/100)*(msgs.length-1)),msgs.length-1)]||msgs[msgs.length-1];
+    if(p>=100){
+      clearInterval(t);
+      setTimeout(()=>{
+        _el('splash').style.opacity='0';
+        _el('splash').style.transition='opacity .4s';
+        setTimeout(()=>{
+          _el('splash').style.display='none';
+          // Check session
+          const saved=localStorage.getItem('sh_current'), tok=localStorage.getItem('sh_token');
+          if(saved&&tok){
+            S.user=JSON.parse(saved);
+            show('app-shell');
+            showApp();
+          } else {
+            show('auth-screen');
+            _el('auth-screen').style.display='flex';
+          }
+        },400);
+      },200);
+    }
+  },50);
+}
+
+// ════════════════════════════════════════════
+//  FOOTER TRIPLE-CLICK ADMIN PANEL
+// ════════════════════════════════════════════
+let footerClicks=0, footerTimer=null;
+document.addEventListener('DOMContentLoaded',()=>{
+  // Load GOOGLE_CLIENT_ID from meta tag (set by server) or window variable
+  const gmeta = document.querySelector('meta[name="google-client-id"]');
+  if(gmeta) window.GOOGLE_CLIENT_ID = gmeta.content;
+  // Init Google after GSI script loads
+  if(window.google){ initGoogle(); } else {
+    const gscript = document.querySelector('script[src*="accounts.google.com"]');
+    if(gscript) gscript.addEventListener('load', initGoogle);
+  }
+  const fp=_el('footer-copy');
+  if(fp) fp.addEventListener('click',()=>{
+    footerClicks++;
+    clearTimeout(footerTimer);
+    if(footerClicks>=3){ footerClicks=0; showAdminPrompt(); return; }
+    footerTimer=setTimeout(()=>footerClicks=0,2000);
+  });
+  runSplash();
+});
+
+function showAdminPrompt(){
+  if(!S.user?.isAdmin){ alert('Admin access denied.'); return; }
+  const users_data = S._adminUsers || [];
+  openModal(`
+    <div style="max-width:900px;width:100%;background:#070d17;border:1px solid rgba(0,255,204,.2);border-radius:14px;max-height:85vh;overflow:hidden;display:flex;flex-direction:column">
+      <div style="padding:14px 20px;border-bottom:1px solid rgba(0,255,204,.1);display:flex;justify-content:space-between;align-items:center;background:rgba(0,255,204,.03);flex-shrink:0">
+        <div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:17px;color:#00ffcc">⚙ SCOTTYHUB ADMIN</div>
+        <button class="btn btn-ghost" onclick="closeModal()" style="padding:6px 14px;border-radius:6px;font-size:12px">✕ Close</button>
+      </div>
+      <div style="flex:1;overflow-y:auto;padding:20px">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:20px">
+          ${[
+            {l:'Logged In As',v:S.user?.name||'Admin',icon:'👤',col:'#00ffcc'},
+            {l:'Email',v:S.user?.email||'—',icon:'📧',col:'#0077ff'},
+            {l:'Role',v:'SUPER ADMIN',icon:'🛡',col:'#ff6b35'},
+          ].map(s=>`<div class="card" style="padding:14px"><div style="font-size:20px;margin-bottom:6px">${s.icon}</div><div style="font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;color:${s.col};word-break:break-all">${s.v}</div><div style="color:#6688aa;font-size:10px;margin-top:3px;font-family:'Share Tech Mono',monospace">${s.l}</div></div>`).join('')}
+        </div>
+        <div class="card" style="padding:16px;margin-bottom:14px">
+          <div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:14px;color:#00ffcc;margin-bottom:12px">⚡ Quick Actions</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button class="btn btn-cyan" onclick="adminLoadUsers()" style="padding:8px 16px;border-radius:7px;font-size:12px">👥 Load Users</button>
+            <button class="btn btn-outline" onclick="navigate('news');closeModal()" style="padding:8px 16px;border-radius:7px;font-size:12px">📰 View News</button>
+            <button class="btn btn-outline" onclick="navigate('community');closeModal()" style="padding:8px 16px;border-radius:7px;font-size:12px">💬 Community</button>
+          </div>
+        </div>
+        <div class="card" style="padding:16px" id="admin-users-panel">
+          <div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:14px;color:#0077ff;margin-bottom:10px">👥 Registered Users</div>
+          <p style="color:#6688aa;font-size:12px">Click "Load Users" to fetch all users.</p>
+        </div>
+      </div>
+    </div>`);
+}
+
+async function adminLoadUsers(){
+  const panel = document.getElementById('admin-users-panel');
+  if(!panel) return;
+  panel.innerHTML = '<p style="color:#6688aa;font-size:12px">Loading...</p>';
+  try {
+    const r = await fetch('/api/users/admin/list', { headers: { Authorization: `Bearer ${localStorage.getItem('sh_token')}` } });
+    const d = await r.json();
+    const users = d.users || [];
+    panel.innerHTML = `
+      <div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:14px;color:#0077ff;margin-bottom:10px">👥 Users (${users.length})</div>
+      ${users.length === 0 ? '<p style="color:#6688aa;font-size:12px">No users found.</p>' :
+        users.map(u=>`<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.04);flex-wrap:wrap">
+          <div style="width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#00ffcc,#0077ff);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;color:#060b14;flex-shrink:0">${(u.username||'U')[0].toUpperCase()}</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-weight:700;font-size:12px">${u.username}</div>
+            <div style="color:#6688aa;font-size:10px;font-family:'Share Tech Mono',monospace">${u.email} • ${u.role} • ${u.is_verified?'✓ verified':'unverified'}</div>
+          </div>
+          <button class="btn btn-red" onclick="adminDeleteUser('${u.id}')" style="padding:3px 8px;border-radius:4px;font-size:9px">🗑 Delete</button>
+        </div>`).join('')}`;
+  } catch(e) {
+    panel.innerHTML = '<p style="color:#ff8888;font-size:12px">Failed to load users.</p>';
+  }
+}
+
+async function adminDeleteUser(id){
+  if(!confirm('Delete this user?')) return;
+  try {
+    const r = await fetch(`/api/users/admin/${id}`, { method:'DELETE', headers:{ Authorization:`Bearer ${localStorage.getItem('sh_token')}` }});
+    const d = await r.json();
+    alert(d.message || 'Done');
+    adminLoadUsers();
+  } catch(e) { alert('Error deleting user'); }
+}
+
+// ════════════════════════════════════════════
+//  KEYBOARD SHORTCUTS
+// ════════════════════════════════════════════
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape') closeModal();
+});
+</script>
+</body>
+</html>
